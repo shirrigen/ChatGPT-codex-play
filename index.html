@@ -1,0 +1,1681 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trumpto · 事件驱动情报MVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #05070b;
+      --surface: rgba(15, 18, 28, 0.92);
+      --surface-muted: rgba(20, 24, 36, 0.72);
+      --border: rgba(94, 115, 179, 0.22);
+      --text-primary: #f6f7ff;
+      --text-secondary: rgba(226, 230, 255, 0.72);
+      --accent: #a386ff;
+      --accent-strong: #7b5cff;
+      --bull: #3dd68c;
+      --bear: #ff7878;
+      --neutral: #ffc35a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(180% 180% at 70% 10%, rgba(120, 82, 255, 0.16) 0%, rgba(5, 7, 11, 0) 55%), var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 36px 0 64px;
+      overflow-x: hidden;
+    }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      grid-template-areas: "feed main";
+      gap: 32px;
+      align-items: start;
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    .app-shell > .source-feed {
+      grid-area: feed;
+    }
+
+    .app-shell > .page {
+      grid-area: main;
+    }
+
+    .page {
+      display: grid;
+      gap: 32px;
+      max-width: 1180px;
+      width: 100%;
+      margin-left: auto;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(120, 117, 255, 0.4) 0%, rgba(68, 55, 134, 0.6) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 600;
+      letter-spacing: 1px;
+      font-size: 18px;
+    }
+
+    .brand-content h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .brand-content p {
+      color: var(--text-secondary);
+      margin-top: 6px;
+      max-width: 640px;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .kpi-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .kpi-card {
+      flex: 1 1 190px;
+      min-width: 160px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px 18px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .kpi-label {
+      color: var(--text-secondary);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .kpi-value {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .section-subtitle {
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .cards-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .signal-card {
+      background: var(--surface);
+      border: 1px solid rgba(131, 144, 196, 0.18);
+      border-radius: 20px;
+      padding: 24px;
+      display: grid;
+      gap: 20px;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .signal-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(165, 155, 255, 0.44);
+      box-shadow: 0 24px 48px -28px rgba(132, 116, 255, 0.6);
+    }
+
+    .signal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .asset-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .asset-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .asset-name span {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .direction-tag {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+
+    .direction-long {
+      background: rgba(61, 214, 140, 0.12);
+      color: var(--bull);
+      border-color: rgba(61, 214, 140, 0.4);
+    }
+
+    .direction-short {
+      background: rgba(255, 120, 120, 0.12);
+      color: var(--bear);
+      border-color: rgba(255, 120, 120, 0.45);
+    }
+
+    .score-block {
+      text-align: right;
+    }
+
+    .score-value {
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .score-label {
+      color: var(--text-secondary);
+      font-size: 12px;
+      margin-top: 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .factor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px 18px;
+    }
+
+    .factor-row {
+      display: grid;
+      grid-template-columns: minmax(0, 160px) 1fr auto;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .factor-bar {
+      position: relative;
+      height: 6px;
+      background: rgba(164, 170, 214, 0.18);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .factor-fill {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(164, 144, 255, 0.8) 0%, rgba(89, 222, 193, 0.8) 100%);
+    }
+
+    .tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .signal-tag {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--surface-muted);
+      border: 1px solid rgba(133, 149, 208, 0.24);
+    }
+
+    .probabilities {
+      display: grid;
+      gap: 8px;
+    }
+
+    .prob-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 48px;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .prob-bar {
+      height: 6px;
+      background: rgba(142, 157, 227, 0.22);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .prob-fill {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+    }
+
+    .prob-bull {
+      background: linear-gradient(90deg, rgba(61, 214, 140, 0.8), rgba(125, 249, 205, 0.7));
+    }
+
+    .prob-bear {
+      background: linear-gradient(90deg, rgba(255, 120, 120, 0.8), rgba(255, 167, 167, 0.7));
+    }
+
+    .prob-range {
+      background: linear-gradient(90deg, rgba(255, 195, 90, 0.8), rgba(255, 228, 174, 0.7));
+    }
+
+    .cta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .source-feed {
+      position: sticky;
+      top: 36px;
+      align-self: start;
+      height: calc(100vh - 72px);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding-right: 12px;
+      overflow-y: auto;
+      overflow-x: visible;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(163, 134, 255, 0.6) transparent;
+      scrollbar-gutter: stable both-edges;
+      z-index: 5;
+    }
+
+    .source-feed::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .source-feed::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .source-feed::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(163, 134, 255, 0.55), rgba(123, 92, 255, 0.75));
+      border-radius: 999px;
+    }
+
+    .source-feed-header {
+      position: sticky;
+      top: 0;
+      z-index: 6;
+      padding: 4px 4px 12px 0;
+      background: linear-gradient(180deg, rgba(5, 7, 11, 0.92) 0%, rgba(5, 7, 11, 0.76) 65%, transparent 100%);
+      backdrop-filter: blur(12px);
+    }
+
+    .source-feed-header h2 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .source-feed-header p {
+      font-size: 12px;
+      color: rgba(178, 190, 244, 0.72);
+      margin-top: 6px;
+    }
+
+    .source-feed-list {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: grid;
+      gap: 10px;
+      padding-bottom: 18px;
+    }
+
+    .source-feed-item {
+      position: relative;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(14, 17, 28, 0.85);
+      border: 1px solid rgba(84, 102, 168, 0.2);
+      display: grid;
+      gap: 8px;
+      cursor: default;
+    }
+
+    .source-feed-item:hover {
+      border-color: rgba(142, 158, 238, 0.4);
+      box-shadow: 0 16px 28px -24px rgba(92, 140, 255, 0.7);
+    }
+
+    .source-feed-time {
+      font-size: 12px;
+      color: rgba(181, 191, 242, 0.75);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .source-feed-title {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .source-feed-meta {
+      display: flex;
+      gap: 10px;
+      font-size: 12px;
+      color: rgba(180, 193, 248, 0.74);
+      flex-wrap: wrap;
+    }
+
+    .source-feed-meta .badge {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(126, 141, 228, 0.24);
+      color: rgba(210, 216, 255, 0.9);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .source-tooltip {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translate(-50%, 6px);
+      width: min(320px, 100%, calc(100vw - 64px));
+      background: rgba(14, 16, 27, 0.96);
+      border: 1px solid rgba(94, 112, 194, 0.3);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 24px 42px -24px rgba(16, 18, 36, 0.85);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      z-index: 20;
+      display: grid;
+      gap: 8px;
+      pointer-events: none;
+    }
+
+    .source-feed-item:hover .source-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+    }
+
+    .source-tooltip strong {
+      font-size: 13px;
+    }
+
+    .source-tooltip p {
+      font-size: 12px;
+      color: rgba(196, 206, 255, 0.76);
+      line-height: 1.6;
+    }
+
+    .source-tooltip .tooltip-ai {
+      font-size: 12px;
+      color: rgba(178, 214, 255, 0.82);
+      display: grid;
+      gap: 4px;
+    }
+
+    .source-tooltip .tooltip-ai span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(212, 220, 255, 0.9);
+    }
+
+    .signal-area {
+      display: grid;
+      gap: 18px;
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 22px;
+      align-content: start;
+    }
+
+    .signal-card {
+      min-height: 0;
+    }
+
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 6, 10, 0.6);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease;
+      z-index: 20;
+    }
+
+    .drawer-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .detail-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 420px;
+      height: 100vh;
+      background: rgba(10, 12, 22, 0.98);
+      box-shadow: -24px 0 48px -28px rgba(0, 0, 0, 0.65);
+      border-left: 1px solid rgba(96, 112, 192, 0.25);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      transition: right 0.3s ease;
+      z-index: 30;
+    }
+
+    .detail-drawer.active {
+      right: 0;
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 22px;
+      border-bottom: 1px solid rgba(82, 98, 178, 0.25);
+    }
+
+    .drawer-header h2 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .drawer-close {
+      border: 0;
+      background: rgba(30, 34, 58, 0.7);
+      color: var(--text-secondary);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .drawer-content {
+      overflow-y: auto;
+      padding: 24px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .drawer-score {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(18, 22, 37, 0.85);
+      border-radius: 16px;
+      border: 1px solid rgba(96, 110, 184, 0.24);
+      padding: 16px;
+    }
+
+    .drawer-body {
+      background: rgba(17, 19, 32, 0.82);
+      border-radius: 16px;
+      border: 1px solid rgba(88, 100, 172, 0.22);
+      padding: 18px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .drawer-section {
+      display: grid;
+      gap: 12px;
+    }
+
+    .trigger {
+      display: flex;
+      gap: 6px;
+    }
+
+    .trigger strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .detail-btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(162, 150, 255, 0.4);
+      background: rgba(123, 92, 255, 0.12);
+      color: var(--text-primary);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    aside {
+      background: var(--surface);
+      border: 1px solid rgba(131, 144, 196, 0.2);
+      border-radius: 22px;
+      padding: 22px;
+      display: grid;
+      gap: 18px;
+      position: relative;
+    }
+
+    .detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .detail-asset {
+      display: grid;
+      gap: 8px;
+    }
+
+    .detail-asset h2 {
+      font-size: 22px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .price-line {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      font-size: 16px;
+    }
+
+    .price-line span {
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .detail-score {
+      text-align: right;
+    }
+
+    .chart-shell {
+      background: linear-gradient(180deg, rgba(29, 36, 62, 0.65) 0%, rgba(15, 17, 28, 0.85) 100%);
+      border: 1px solid rgba(109, 135, 214, 0.18);
+      border-radius: 18px;
+      padding: 18px;
+      position: relative;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    svg {
+      width: 100%;
+      height: 180px;
+    }
+
+    .info-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .info-item {
+      display: grid;
+      gap: 6px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(123, 153, 255, 0.18);
+      background: rgba(17, 22, 38, 0.72);
+    }
+
+    .info-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .info-type {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(106, 132, 255, 0.14);
+      border: 1px solid rgba(125, 150, 255, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    .info-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .info-desc {
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .ai-summary {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(170, 159, 255, 0.2);
+      background: linear-gradient(180deg, rgba(89, 74, 188, 0.25) 0%, rgba(19, 18, 31, 0.9) 100%);
+      display: grid;
+      gap: 10px;
+    }
+
+    .ai-summary h3 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .ai-summary p {
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .strategy-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .strategy-card {
+      border-radius: 16px;
+      border: 1px solid rgba(121, 141, 212, 0.18);
+      background: rgba(18, 20, 31, 0.88);
+      padding: 16px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .strategy-card strong {
+      font-size: 14px;
+    }
+
+    .strategy-meta {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .strategy-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .strategy-meta span::before {
+      content: "•";
+      color: rgba(123, 113, 255, 0.8);
+    }
+
+    .strategy-notes {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .detail-placeholder {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(5, 7, 12, 0.72);
+      border-radius: 22px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 26px;
+    }
+
+    .detail-placeholder.active {
+      display: flex;
+    }
+
+    .detail-placeholder p {
+      max-width: 300px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 1100px) {
+      .app-shell {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "main"
+          "feed";
+        gap: 28px;
+      }
+
+      .page {
+        margin-left: 0;
+      }
+
+      .source-feed {
+        position: static;
+        top: auto;
+        height: auto;
+        padding-right: 0;
+        overflow: visible;
+        scrollbar-gutter: auto;
+      }
+
+      .source-feed-header {
+        position: static;
+        padding: 0 0 12px;
+        background: transparent;
+        backdrop-filter: none;
+      }
+
+      .source-tooltip {
+        left: 0;
+        top: calc(100% + 12px);
+        transform: translateY(6px);
+        width: min(100%, calc(100vw - 48px));
+      }
+
+      .source-feed-item:hover .source-tooltip {
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 28px 0 48px;
+      }
+
+      .app-shell {
+        padding: 0 20px;
+        gap: 24px;
+      }
+
+      header {
+        gap: 16px;
+      }
+
+      .brand {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .brand-badge {
+        width: 46px;
+        height: 46px;
+        font-size: 16px;
+      }
+
+      .cards-grid {
+        gap: 16px;
+      }
+
+      .factor-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .source-panel {
+        border-radius: 16px;
+      }
+
+      .source-header,
+      .source-row {
+        grid-template-columns: 90px 1fr;
+        gap: 12px;
+      }
+
+      .source-row .source-asset,
+      .source-row .source-provider {
+        display: none;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="source-feed">
+      <div class="source-feed-header">
+        <h2>信号源信息流</h2>
+        <p>实时事件 · 按时间排序</p>
+      </div>
+      <div class="source-feed-list" id="sourceFeedList"></div>
+    </aside>
+
+    <div class="page">
+      <header>
+        <div class="brand">
+          <div class="brand-badge">TT</div>
+          <div class="brand-content">
+            <h1>Trumpto 情报终端 · MVP</h1>
+            <p>事件驱动的垂直化交易情报平台，实时捕捉特朗普及相关生态的言论、链上与市场信号，将碎片化信息转化为可执行的多市场套利策略。</p>
+          </div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi-card">
+            <span class="kpi-label">事件监控覆盖</span>
+            <span class="kpi-value">12 信号源</span>
+            <span style="color: var(--text-secondary); font-size: 12px;">新闻、社媒、链上、ETF、政策发布</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">最后更新时间</span>
+            <span class="kpi-value">2024-05-27 · 10:18</span>
+            <span style="color: var(--text-secondary); font-size: 12px;">Trump Index 事件热度 +12%</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-label">套利提案</span>
+            <span class="kpi-value">5 个待验证</span>
+            <span style="color: var(--text-secondary); font-size: 12px;">跨市场价差平均 2.1%</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="signal-area">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Trump 指数综合信号</div>
+            <div class="section-subtitle">AI 对一篮子资产的实时评分与方向建议</div>
+          </div>
+          <div class="section-subtitle">评分阈值 ≥ 70 自动推送</div>
+        </div>
+
+        <div class="signal-grid">
+          <article class="signal-card" data-symbol="WFLI">
+            <div class="signal-header">
+              <div class="asset-meta">
+                <div class="asset-name">
+                  WFLI
+                  <span>World Liberty Financial</span>
+                  <span class="direction-tag direction-long">做多</span>
+                </div>
+                <div style="color: var(--text-secondary); font-size: 12px;">触发时间 · 10:12 · Trump Index 热度 +18%</div>
+              </div>
+              <div class="score-block">
+                <div class="score-value">88</div>
+                <div class="score-label">综合评分</div>
+              </div>
+            </div>
+
+            <div class="tags-row">
+              <span class="signal-tag">特朗普竞选声明</span>
+              <span class="signal-tag">链上鲸鱼地址净流入 +4.6M</span>
+              <span class="signal-tag">Truth Social 热度 +63%</span>
+              <span class="signal-tag">CME 资金费率转正</span>
+            </div>
+
+            <div class="factor-grid">
+              <div class="factor-row">
+                <span>价格行为</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:25%;"></span>
+                </div>
+                <span>25%</span>
+              </div>
+              <div class="factor-row">
+                <span>衍生品信号</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:25%;"></span>
+                </div>
+                <span>25%</span>
+              </div>
+              <div class="factor-row">
+                <span>链上行为</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:20%;"></span>
+                </div>
+                <span>20%</span>
+              </div>
+              <div class="factor-row">
+                <span>宏观 / ETF</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:20%;"></span>
+                </div>
+                <span>20%</span>
+              </div>
+              <div class="factor-row">
+                <span>Trump 垂直事件</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:10%;"></span>
+                </div>
+                <span>10%</span>
+              </div>
+            </div>
+
+            <div class="probabilities">
+              <div class="prob-row">
+                <span style="color: var(--bull);">上涨</span>
+                <div class="prob-bar">
+                  <span class="prob-fill prob-bull" style="width: 54%;"></span>
+                </div>
+                <span>54%</span>
+              </div>
+              <div class="prob-row">
+                <span style="color: var(--bear);">下跌</span>
+                <div class="prob-bar">
+                  <span class="prob-fill prob-bear" style="width: 24%;"></span>
+                </div>
+                <span>24%</span>
+              </div>
+              <div class="prob-row">
+                <span style="color: var(--neutral);">震荡</span>
+                <div class="prob-bar">
+                  <span class="prob-fill prob-range" style="width: 22%;"></span>
+                </div>
+                <span>22%</span>
+              </div>
+            </div>
+
+            <div class="cta-row">
+              <div class="trigger"><strong>触发条件</strong> · CME OI + Truth 社媒强势共振</div>
+              <button class="detail-btn" type="button">查看详情</button>
+            </div>
+          </article>
+
+          <article class="signal-card" data-symbol="BTC">
+            <div class="signal-header">
+              <div class="asset-meta">
+                <div class="asset-name">
+                  BTC
+                  <span>Bitcoin / Trump Index 配比 30%</span>
+                  <span class="direction-tag direction-short">做空</span>
+                </div>
+                <div style="color: var(--text-secondary); font-size: 12px;">触发时间 · 09:45 · ETF 流入放缓</div>
+              </div>
+              <div class="score-block">
+                <div class="score-value">74</div>
+                <div class="score-label">综合评分</div>
+              </div>
+            </div>
+
+            <div class="tags-row">
+              <span class="signal-tag">策略：跨市场套利</span>
+              <span class="signal-tag">ABTC · 美股溢价 2.2%</span>
+              <span class="signal-tag">期权 Put/Call 比率 1.7</span>
+            </div>
+
+            <div class="factor-grid">
+              <div class="factor-row">
+                <span>价格行为</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:28%;"></span>
+                </div>
+                <span>28%</span>
+              </div>
+              <div class="factor-row">
+                <span>衍生品信号</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:27%;"></span>
+                </div>
+                <span>27%</span>
+              </div>
+              <div class="factor-row">
+                <span>链上行为</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:19%;"></span>
+                </div>
+                <span>19%</span>
+              </div>
+              <div class="factor-row">
+                <span>宏观 / ETF</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:16%;"></span>
+                </div>
+                <span>16%</span>
+              </div>
+              <div class="factor-row">
+                <span>Trump 垂直事件</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:10%;"></span>
+                </div>
+                <span>10%</span>
+              </div>
+            </div>
+
+            <div class="probabilities">
+              <div class="prob-row">
+                <span style="color: var(--bull);">上涨</span>
+                <div class="prob-bar">
+                  <span class="prob-fill prob-bull" style="width: 28%;"></span>
+                </div>
+                <span>28%</span>
+              </div>
+              <div class="prob-row">
+                <span style="color: var(--bear);">下跌</span>
+                <div class="prob-bar">
+                  <span class="prob-fill prob-bear" style="width: 51%;"></span>
+                </div>
+                <span>51%</span>
+              </div>
+              <div class="prob-row">
+                <span style="color: var(--neutral);">震荡</span>
+                <div class="prob-bar">
+                  <span class="prob-fill prob-range" style="width: 21%;"></span>
+                </div>
+                <span>21%</span>
+              </div>
+            </div>
+
+            <div class="cta-row">
+              <div class="trigger"><strong>止损建议</strong> · 关键位 66,280 美元</div>
+              <button class="detail-btn" type="button">查看详情</button>
+            </div>
+          </article>
+
+          <article class="signal-card" data-symbol="TRUTH">
+            <div class="signal-header">
+              <div class="asset-meta">
+                <div class="asset-name">
+                  Truth Social
+                  <span>DJT / NASDAQ</span>
+                  <span class="direction-tag direction-long">做多</span>
+                </div>
+                <div style="color: var(--text-secondary); font-size: 12px;">触发时间 · 08:58 · 社媒热度爆发</div>
+              </div>
+              <div class="score-block">
+                <div class="score-value">81</div>
+                <div class="score-label">综合评分</div>
+              </div>
+            </div>
+
+            <div class="tags-row">
+              <span class="signal-tag">特朗普直播预告</span>
+              <span class="signal-tag">美股盘前交易量 +220%</span>
+              <span class="signal-tag">加密地址转入 DJT 生态基金</span>
+            </div>
+
+            <div class="factor-grid">
+              <div class="factor-row">
+                <span>价格行为</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:22%;"></span>
+                </div>
+                <span>22%</span>
+              </div>
+              <div class="factor-row">
+                <span>衍生品信号</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:18%;"></span>
+                </div>
+                <span>18%</span>
+              </div>
+              <div class="factor-row">
+                <span>链上行为</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:21%;"></span>
+                </div>
+                <span>21%</span>
+              </div>
+              <div class="factor-row">
+                <span>宏观 / ETF</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:27%;"></span>
+                </div>
+                <span>27%</span>
+              </div>
+              <div class="factor-row">
+                <span>Trump 垂直事件</span>
+                <div class="factor-bar">
+                  <span class="factor-fill" style="width:12%;"></span>
+                </div>
+                <span>12%</span>
+              </div>
+            </div>
+
+            <div class="probabilities">
+              <div class="prob-row">
+                <span style="color: var(--bull);">上涨</span>
+                <div class="prob-bar">
+                  <span class="prob-fill prob-bull" style="width: 62%;"></span>
+                </div>
+                <span>62%</span>
+              </div>
+              <div class="prob-row">
+                <span style="color: var(--bear);">下跌</span>
+                <div class="prob-bar">
+                  <span class="prob-fill prob-bear" style="width: 18%;"></span>
+                </div>
+                <span>18%</span>
+              </div>
+              <div class="prob-row">
+                <span style="color: var(--neutral);">震荡</span>
+                <div class="prob-bar">
+                  <span class="prob-fill prob-range" style="width: 20%;"></span>
+                </div>
+                <span>20%</span>
+              </div>
+            </div>
+
+            <div class="cta-row">
+              <div class="trigger"><strong>套利提示</strong> · 加密 ADR + 美股盘前价差</div>
+              <button class="detail-btn" type="button">查看详情</button>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="detail-drawer" id="detailDrawer">
+    <div class="drawer-header">
+      <h2 id="drawerTitle">信号详情</h2>
+      <button class="drawer-close" id="drawerCloseBtn" type="button">关闭</button>
+    </div>
+    <div class="drawer-content">
+      <div class="drawer-score">
+        <div>
+          <div class="direction-tag direction-long" id="drawerDirection">做多</div>
+          <div class="price-line">
+            <strong id="drawerPrice">$0.00</strong>
+            <span id="drawerChange">0%</span>
+            <span id="drawerTimestamp">更新时间 · --:--</span>
+          </div>
+        </div>
+        <div class="score-block">
+          <div class="score-value" id="drawerScore">0</div>
+          <div class="score-label">综合评分</div>
+        </div>
+      </div>
+
+      <div class="chart-shell">
+        <div class="chart-header">
+          <span>24h 模拟行情</span>
+          <span id="drawerVolume">成交量 · --</span>
+        </div>
+        <svg viewBox="0 0 320 180" preserveAspectRatio="none">
+          <polyline id="drawerLineChart" fill="none" stroke="#8d78ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points=""></polyline>
+          <polyline id="drawerAreaGradient" fill="url(#areaFill)" stroke="none" points=""></polyline>
+        </svg>
+      </div>
+
+      <div class="ai-summary">
+        <h3>AI 情绪摘要</h3>
+        <p id="drawerSummary">AI 模型正在汇总信号...</p>
+      </div>
+
+      <div class="drawer-section">
+        <div class="section-title" style="font-size: 16px;">信号来源</div>
+        <div class="section-subtitle" id="drawerSourcesCount">当前加载 0 条</div>
+        <div class="info-list" id="drawerSources"></div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="section-title" style="font-size: 16px;">策略建议层</div>
+        <div class="section-subtitle">风险承受度驱动的执行建议</div>
+        <div class="strategy-grid" id="drawerStrategies"></div>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    const signalDataset = {
+      WFLI: {
+        name: "WFLI · World Liberty Financial",
+        direction: "long",
+        price: "$1.34",
+        change: "+5.2%",
+        timestamp: "更新时间 · 10:18",
+        score: 88,
+        volume: "成交量 · $94M",
+        chart: [1.12, 1.08, 1.03, 1.05, 1.11, 1.17, 1.22, 1.26, 1.29, 1.32, 1.35, 1.34, 1.32],
+        summary: "特朗普竞选团队宣布与 World Liberty Financial 合作，为竞选筹款提供链上结算通道。社媒情绪与链上鲸鱼资金同步转入，叠加 CME 资金费率转正，模型给出做多评分 88，建议顺势参与。",
+        sources: [
+          {
+            type: "新闻",
+            time: "10:05",
+            title: "Fox Business：特朗普竞选办公室敲定 WFLI 合作",
+            desc: "官方声明确认 WFLI 将成为竞选周期内的主要链上结算伙伴。模型判断将提升代币使用率与媒体关注度。"
+          },
+          {
+            type: "链上",
+            time: "10:07",
+            title: "鲸鱼地址 0x9F…a21 连续买入 4.6M WFLI",
+            desc: "链上监控识别该地址与特朗普家族基金会曾有交互，过去 24h 内首次出现大额净流入。"
+          },
+          {
+            type: "社媒",
+            time: "10:09",
+            title: "Truth Social 热度指数 63 → 120",
+            desc: "社交监听模型捕捉到与“Liberty Payment”相关话题在 3 分钟内爆量，情绪偏正面。"
+          },
+          {
+            type: "衍生品",
+            time: "10:11",
+            title: "WFLI 永续资金费率由 -0.012% 翻为 +0.018%",
+            desc: "资金费率从负转正，空头平仓需求上升，配合 OI 增长 6.2%，模型判断多头动能延续。"
+          }
+        ],
+        strategies: [
+          {
+            name: "短线高杠杆 (20x)",
+            trigger: "突破 1.36 关键位 + 资金费率维持正值",
+            stop: "止损 0.9%",
+            target: "获利目标 2.4%",
+            notes: "信号以事件热度驱动，应在热度衰减前快速执行，适合掌握高频工具的用户。"
+          },
+          {
+            name: "波段趋势跟随 (5x)",
+            trigger: "美股开盘前宏观资金共振，Trump Index ≥ +10%",
+            stop: "止损 3%",
+            target: "获利目标 12%",
+            notes: "事件驱动向基本面演变时执行，关注跨市场溢价同步。"
+          },
+          {
+            name: "防御性现货 + 期权对冲",
+            trigger: "持仓前布置保护性 Put (IV ≤ 45%)",
+            stop: "对冲成本控制在 α 收益 30% 内",
+            target: "回撤对冲后净敞口 < 1.5%",
+            notes: "适用于 Trump 活动正式开始前，兼顾潜在黑天鹅。"
+          }
+        ]
+      },
+      BTC: {
+        name: "BTC · Bitcoin",
+        direction: "short",
+        price: "$66,120",
+        change: "-1.8%",
+        timestamp: "更新时间 · 09:48",
+        score: 74,
+        volume: "成交量 · $18.4B",
+        chart: [67450, 67120, 66980, 66840, 66890, 66920, 66650, 66420, 66380, 66120, 66090, 66210, 66180],
+        summary: "ETF 流入放缓与 ABTC 美股溢价倒挂，叠加期权偏空结构，模型判定短线做空信号有效。建议关注跨市场价差与 CME Basis 变化，防止 Trump 垂直事件造成快速反弹。",
+        sources: [
+          {
+            type: "ETF",
+            time: "09:32",
+            title: "美国现货 ETF 当日净流入 -$58M",
+            desc: "较前一交易日缩量 70%，说明机构被动买盘减少，价格弹性增大。"
+          },
+          {
+            type: "衍生品",
+            time: "09:40",
+            title: "CME OI 自高位回落 4.1%",
+            desc: "期货持仓减少显示机构短线撤出，模型将其视为趋势反转预兆。"
+          },
+          {
+            type: "美股",
+            time: "09:44",
+            title: "ABTC 盘前未跟随 BTC 5% 涨幅",
+            desc: "跨市场价差 +2.2%，提示可提前布局美股开盘的对冲套利。"
+          }
+        ],
+        strategies: [
+          {
+            name: "短线高杠杆 (15x)",
+            trigger: "跌破 65,980 + 放量",
+            stop: "止损 1.2%",
+            target: "获利目标 2.8%",
+            notes: "优先在 ETF 数据确认净流出后执行，信号维持时长 2-4 小时。"
+          },
+          {
+            name: "波段趋势跟随 (4x)",
+            trigger: "Trump Index 热度回落 + 宏观流动性收紧",
+            stop: "止损 3.5%",
+            target: "获利目标 11%",
+            notes: "关注美股 Trump 概念股是否同步走弱，作为确认条件。"
+          },
+          {
+            name: "跨市场对冲",
+            trigger: "ABTC 溢价 > 1.8%",
+            stop: "价差回归 < 0.8%",
+            target: "套利区间 1.8% → 0.6%",
+            notes: "Crypto 先行，美股滞后场景下执行，需提前安排券商订单。"
+          }
+        ]
+      },
+      TRUTH: {
+        name: "Truth Social · DJT",
+        direction: "long",
+        price: "$64.20",
+        change: "+6.1%",
+        timestamp: "更新时间 · 09:10",
+        score: 81,
+        volume: "成交量 · $860M",
+        chart: [58.4, 59.2, 60.1, 59.8, 60.3, 61.7, 62.1, 62.9, 63.4, 64.8, 64.2, 64.6, 64.2],
+        summary: "特朗普宣布在 Truth Social 上举办竞选直播，社媒热度与盘前交易量同步放大。模型认为 DJT 可能在开盘后形成缺口上行，同时建议结合加密衍生品做对冲。",
+        sources: [
+          {
+            type: "社媒",
+            time: "08:40",
+            title: "直播公告贴文 10 分钟互动量破 50 万",
+            desc: "互动量较 7 日均值提升 4.2 倍，内容情绪偏高，配合新增关注量提升。"
+          },
+          {
+            type: "盘前数据",
+            time: "08:52",
+            title: "盘前成交额 $158M · +220%",
+            desc: "成交主要集中在机构账户，暗示预期直播将带来广告与订阅需求。"
+          },
+          {
+            type: "链上",
+            time: "09:04",
+            title: "Trump 关联基金地址向 DJT 生态转入 $3.1M",
+            desc: "链上转移发生在直播公告之后 5 分钟，可能用于营销或市值管理。"
+          }
+        ],
+        strategies: [
+          {
+            name: "短线高杠杆 (10x)",
+            trigger: "开盘缺口 +2% 以内时跟随",
+            stop: "止损 1%",
+            target: "获利目标 3.2%",
+            notes: "直播前 30 分钟内执行，利用社媒热度末端波动。"
+          },
+          {
+            name: "波段趋势跟随 (3x)",
+            trigger: "直播结束后维持交投放量",
+            stop: "止损 4%",
+            target: "获利目标 15%",
+            notes: "若直播带来订阅增长预期，可延长持仓至财报周期。"
+          },
+          {
+            name: "防御性现货 + 期权对冲",
+            trigger: "买入 DJT 现货 + 卖出 Covered Call",
+            stop: "期权执行价设置 8% 以上",
+            target: "净收益 4-6%",
+            notes: "适用于希望保留直播潜在利好的投资者，同时用权利金覆盖波动。"
+          }
+        ]
+      }
+    };
+
+    const sourceFeed = [
+      {
+        id: "src-wfli-alliance",
+        timeAgo: "1 分钟前",
+        timestamp: "2024-05-27 10:18",
+        title: "特朗普竞选办公室正式接入 WFLI 小额捐赠渠道",
+        asset: { symbol: "WFLI", name: "World Liberty Financial" },
+        source: "Reuters",
+        summary: "竞选团队确认创建面向基层支持者的链上捐赠入口，WFLI 地址活跃度快速提升。",
+        detail: "Reuters 报道称，特朗普竞选办公室在一份内部通告中确认与 WFLI 团队达成合作，将在未来两周内对所有小额捐赠渠道启用链上清算。消息发出后，主要钱包开始分批配置流动性，为突发流量做准备。",
+        ai: "AI 评估该事件对 WFLI 需求端提供即时推动力，并可能触发社媒讨论峰值，短线交易可关注 1.36 上方的突破走向。"
+      },
+      {
+        id: "src-btc-etf",
+        timeAgo: "6 分钟前",
+        timestamp: "2024-05-27 10:13",
+        title: "美国现货比特币 ETF 出现 7 日来首次净流出",
+        asset: { symbol: "BTC", name: "Bitcoin" },
+        source: "FX168",
+        summary: "ETF 合计净流出 5,800 万美元，机构被动买盘趋于谨慎。",
+        detail: "FX168 援引追踪机构数据指出，五大现货 ETF 在过去 24 小时共计流出约 5,800 万美元，扭转连续净流入趋势。报告同时提到，美股盘前相关概念股表现弱于大盘，可能进一步拖累 BTC 短线表现。",
+        ai: "模型判定 ETF 流入是 BTC 的关键风险指标之一，若流出持续三天，将配合衍生品空头增仓形成中等强度做空信号。"
+      },
+      {
+        id: "src-truth-social",
+        timeAgo: "9 分钟前",
+        timestamp: "2024-05-27 10:10",
+        title: "Truth Social 宣布推出竞选直播特别版块",
+        asset: { symbol: "TRUTH", name: "DJT / Truth Social" },
+        source: "PANews",
+        summary: "平台新增面向竞选团队的直播专栏，盘前交易量已放大至日均 2.2 倍。",
+        detail: "PANews 指出，Truth Social 正在内测竞选专属直播版块，由特朗普团队率先入驻。知情人士透露，平台计划引入虚拟赞助与打赏功能，部分收益可能用于竞选基金回流。",
+        ai: "AI 评估 DJT 盘前量能激增与新增直播功能共振，或在美股开盘后带来 Beta+ 超额表现，建议结合加密衍生品对冲尾部风险。"
+      },
+      {
+        id: "src-cme-basis",
+        timeAgo: "14 分钟前",
+        timestamp: "2024-05-27 10:05",
+        title: "CME 比特币期限基差转负，机构套利盘重回布局",
+        asset: { symbol: "BTC", name: "Bitcoin" },
+        source: "PANews",
+        summary: "CME 主力合约较现货折价 0.8%，部分基金开始重启跨市场空现套利。",
+        detail: "PANews 援引交易员表示，受 ETF 净流出影响，CME 主力合约价格短暂低于现货，机构正在部署卖期货、买现货的对冲策略。套利资本加速回流可能压制 BTC 短线上行空间。",
+        ai: "模型认为基差倒挂通常提示短期压力上升，若叠加美元流动性收紧，应警惕 BTC 跌破 65,800 的确认信号。"
+      },
+      {
+        id: "src-doge-meme",
+        timeAgo: "27 分钟前",
+        timestamp: "2024-05-27 09:52",
+        title: "马斯克称将允许官方商店试点使用 DOGE 付款",
+        asset: { symbol: "DOGE", name: "Dogecoin" },
+        source: "Cointelegraph",
+        summary: "SpaceX 周边商店将于 6 月正式接入 DOGE 支付，试点范围小但象征意义强。",
+        detail: "Cointelegraph 报道马斯克在社媒空间提到，SpaceX 周边将测试 DOGE 支付渠道，初期限制订单金额。虽然实际规模有限，但象征意义导致社媒讨论度迅速提升。",
+        ai: "AI 判断 DOGE 事件对 Trump Index 的直接影响有限，但可能触发 Meme 板块联动，建议观望或以轻仓跟随社媒情绪。"
+      },
+      {
+        id: "src-etf-trump-basket",
+        timeAgo: "35 分钟前",
+        timestamp: "2024-05-27 09:44",
+        title: "V-Capital：计划推出 Trump 概念股 + 加密篮子 ETF",
+        asset: { symbol: "TCO", name: "Trump Index Basket" },
+        source: "PANews",
+        summary: "拟收录 ABTC、Truth Social、WFLI 等资产，预计三季度向监管递交说明。",
+        detail: "业内基金 V-Capital 宣布研究将 Trump 相关的美股与加密资产组合成主题 ETF，初步权重以 BTC、TRUTH、WFLI 为主，同时跟踪 Trump Index 热度指标，计划三季度申报。",
+        ai: "AI 认为若 ETF 方案推进，可提升指数策略的机构关注度，建议持续跟踪监管反馈与资金预约动态。"
+      }
+    ];
+
+    const detailDrawer = document.getElementById("detailDrawer");
+    const drawerBackdrop = document.getElementById("drawerBackdrop");
+    const drawerCloseBtn = document.getElementById("drawerCloseBtn");
+    const lineChart = document.getElementById("drawerLineChart");
+    const areaGradient = document.getElementById("drawerAreaGradient");
+
+    const drawerRefs = {
+      title: document.getElementById("drawerTitle"),
+      direction: document.getElementById("drawerDirection"),
+      price: document.getElementById("drawerPrice"),
+      change: document.getElementById("drawerChange"),
+      timestamp: document.getElementById("drawerTimestamp"),
+      score: document.getElementById("drawerScore"),
+      volume: document.getElementById("drawerVolume"),
+      summary: document.getElementById("drawerSummary"),
+      sources: document.getElementById("drawerSources"),
+      sourcesCount: document.getElementById("drawerSourcesCount"),
+      strategies: document.getElementById("drawerStrategies")
+    };
+
+    const sourceFeedList = document.getElementById("sourceFeedList");
+
+    function formatChartPoints(values) {
+      if (!values.length) return "";
+      const max = Math.max(...values);
+      const min = Math.min(...values);
+      const range = max - min || 1;
+      const width = 320;
+      const height = 180;
+      const step = width / (values.length - 1);
+      return values
+        .map((v, idx) => {
+          const x = idx * step;
+          const y = height - ((v - min) / range) * (height - 16) - 8;
+          return `${x.toFixed(2)},${y.toFixed(2)}`;
+        })
+        .join(" ");
+    }
+
+    function renderDetail(symbol) {
+      const data = signalDataset[symbol];
+      if (!data) return;
+
+      drawerRefs.title.textContent = data.name;
+      drawerRefs.direction.textContent = data.direction === "long" ? "做多" : data.direction === "short" ? "做空" : "观望";
+      drawerRefs.direction.className = `direction-tag ${data.direction === "long" ? "direction-long" : data.direction === "short" ? "direction-short" : ""}`;
+      drawerRefs.price.textContent = data.price;
+      drawerRefs.change.textContent = data.change;
+      drawerRefs.timestamp.textContent = data.timestamp;
+      drawerRefs.score.textContent = data.score;
+      drawerRefs.volume.textContent = data.volume;
+      drawerRefs.summary.textContent = data.summary;
+      drawerRefs.sourcesCount.textContent = `当前加载 ${data.sources.length} 条`;
+
+      drawerRefs.sources.innerHTML = data.sources
+        .map(source => `
+          <div class="info-item">
+            <div class="info-head">
+              <span>${source.time}</span>
+              <span class="info-type">${source.type}</span>
+            </div>
+            <div class="info-title">${source.title}</div>
+            <div class="info-desc">${source.desc}</div>
+          </div>
+        `).join("");
+
+      drawerRefs.strategies.innerHTML = data.strategies
+        .map(strategy => `
+          <div class="strategy-card">
+            <strong>${strategy.name}</strong>
+            <div class="strategy-meta">
+              <span>触发：${strategy.trigger}</span>
+              <span>止损：${strategy.stop}</span>
+              <span>目标：${strategy.target}</span>
+            </div>
+            <div class="strategy-notes">${strategy.notes}</div>
+          </div>
+        `).join("");
+
+      const points = formatChartPoints(data.chart);
+      lineChart.setAttribute("points", points);
+      areaGradient.setAttribute("points", `${points} 320,180 0,180`);
+
+      detailDrawer.classList.add("active");
+      drawerBackdrop.classList.add("active");
+    }
+
+    document.querySelectorAll(".signal-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const symbol = card.dataset.symbol;
+        renderDetail(symbol);
+      });
+      card.querySelector(".detail-btn").addEventListener("click", event => {
+        event.stopPropagation();
+        const symbol = card.dataset.symbol;
+        renderDetail(symbol);
+      });
+    });
+
+    function closeDrawer() {
+      detailDrawer.classList.remove("active");
+      drawerBackdrop.classList.remove("active");
+    }
+
+    drawerCloseBtn.addEventListener("click", closeDrawer);
+    drawerBackdrop.addEventListener("click", closeDrawer);
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeDrawer();
+      }
+    });
+
+    function renderSourceFeed() {
+      if (!sourceFeedList) return;
+      sourceFeedList.innerHTML = sourceFeed
+        .map(item => `
+          <div class="source-feed-item">
+            <div class="source-feed-time">${item.timeAgo}</div>
+            <div class="source-feed-title">${item.title}</div>
+            <div class="source-feed-meta">
+              <span class="badge">${item.asset.symbol}</span>
+              <span>${item.asset.name}</span>
+              <span>${item.source}</span>
+              <span>${item.timestamp.split(' ')[1]}</span>
+            </div>
+            <div class="source-tooltip">
+              <strong>${item.title}</strong>
+              <p>${item.summary}</p>
+              <p>${item.detail}</p>
+              <div class="tooltip-ai">
+                <span>AI</span>
+                ${item.ai}
+              </div>
+            </div>
+          </div>
+        `)
+        .join("");
+    }
+
+    renderSourceFeed();
+  </script>
+</body>
+
+</html>
