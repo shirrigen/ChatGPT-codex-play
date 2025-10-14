@@ -24,6 +24,13 @@
       --bull: #3dd68c;
       --bear: #ff7878;
       --neutral: #ffc35a;
+      --os-primary: #a386ff;
+      --os-primary-soft: rgba(163, 134, 255, 0.18);
+      --os-surface: rgba(15, 18, 28, 0.92);
+      --os-border: rgba(118, 138, 210, 0.2);
+      --os-success: var(--bull);
+      --os-danger: var(--bear);
+      --os-warning: var(--neutral);
     }
 
     * {
@@ -239,6 +246,11 @@
       gap: 6px;
     }
 
+    .asset-meta-line {
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
     .asset-name {
       display: flex;
       align-items: center;
@@ -251,6 +263,286 @@
       font-size: 14px;
       color: var(--text-secondary);
       font-weight: 500;
+    }
+
+    .quote-card {
+      margin-top: 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(133, 149, 208, 0.22);
+      background: linear-gradient(145deg, rgba(18, 26, 44, 0.88), rgba(12, 16, 28, 0.68));
+      padding: 14px 16px;
+      display: grid;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-card::after {
+      content: "";
+      position: absolute;
+      inset: -20% -30%;
+      background: radial-gradient(ellipse at top, rgba(163, 134, 255, 0.28), transparent 55%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .quote-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .quote-card.up {
+      border-color: rgba(61, 214, 140, 0.32);
+    }
+
+    .quote-card.down {
+      border-color: rgba(255, 120, 120, 0.32);
+    }
+
+    .quote-card.neutral {
+      border-color: rgba(255, 195, 90, 0.32);
+    }
+
+    .quote-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .quote-main {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .quote-price {
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    .quote-change {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .quote-change.up {
+      color: var(--bull);
+    }
+
+    .quote-change.down {
+      color: var(--bear);
+    }
+
+    .quote-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .quote-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quote-meta span::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(163, 134, 255, 0.6);
+    }
+
+    .market-hero {
+      position: relative;
+      border-radius: 26px;
+      padding: 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 28px;
+      border: 1px solid rgba(129, 144, 210, 0.22);
+      background: linear-gradient(140deg, rgba(29, 36, 62, 0.92) 0%, rgba(9, 12, 22, 0.86) 55%, rgba(15, 10, 38, 0.95) 100%);
+      overflow: hidden;
+    }
+
+    .market-hero::after {
+      content: "";
+      position: absolute;
+      inset: -20% -30%;
+      background: radial-gradient(circle at 20% 20%, rgba(163, 134, 255, 0.35), transparent 60%);
+      opacity: 0.75;
+      pointer-events: none;
+    }
+
+    .market-hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-primary {
+      display: grid;
+      gap: 20px;
+    }
+
+    .hero-identity {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .hero-identity h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .hero-identity p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    .hero-price {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      padding: 18px 20px;
+      border-radius: 18px;
+      background: rgba(16, 20, 32, 0.9);
+      border: 1px solid rgba(133, 149, 208, 0.18);
+    }
+
+    .hero-symbol {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .hero-value {
+      font-size: 40px;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .hero-change {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+    }
+
+    .hero-change .change-value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .hero-change .change-value.up {
+      color: var(--bull);
+    }
+
+    .hero-change .change-value.down {
+      color: var(--bear);
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .hero-meta-item {
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(14, 18, 32, 0.82);
+      border: 1px solid rgba(118, 136, 216, 0.16);
+      display: grid;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .hero-meta-item strong {
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .hero-secondary {
+      display: grid;
+      gap: 14px;
+    }
+
+    .hero-stat {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(12, 16, 28, 0.92);
+      border: 1px solid rgba(121, 140, 210, 0.18);
+      display: grid;
+      gap: 6px;
+    }
+
+    .hero-stat .stat-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-stat .stat-value {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .hero-stat .stat-value.up {
+      color: var(--bull);
+    }
+
+    .hero-stat .stat-value.down {
+      color: var(--bear);
+    }
+
+    .hero-stat .stat-note {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .hero-ticker {
+      margin-top: 16px;
+      padding: 18px 22px;
+      border-radius: 20px;
+      background: rgba(15, 18, 30, 0.9);
+      border: 1px solid rgba(110, 128, 206, 0.18);
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-ticker .ticker-label {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .ticker-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
     }
 
     .direction-tag {
@@ -298,34 +590,110 @@
       text-transform: uppercase;
     }
 
-    .factor-grid {
+    .factor-breakdown {
+      margin-top: 18px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 14px 18px;
+      gap: 12px;
     }
 
-    .factor-row {
-      display: grid;
-      grid-template-columns: minmax(0, 160px) 1fr auto;
-      align-items: center;
+    .factor-section-head {
+      display: flex;
+      justify-content: space-between;
       gap: 12px;
-      font-size: 13px;
+      align-items: center;
+      font-size: 12px;
       color: var(--text-secondary);
     }
 
-    .factor-bar {
-      position: relative;
-      height: 6px;
-      background: rgba(164, 170, 214, 0.18);
-      border-radius: 999px;
-      overflow: hidden;
+    .factor-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-primary);
     }
 
-    .factor-fill {
-      position: absolute;
-      inset: 0;
+    .factor-insights {
+      background: rgba(18, 22, 34, 0.55);
+      border: 1px solid rgba(133, 149, 208, 0.22);
+      border-radius: 18px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .factor-insight {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(8, 11, 20, 0.85);
+      border: 1px solid rgba(110, 129, 196, 0.22);
+      min-height: 132px;
+    }
+
+    .factor-insight-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .factor-weight {
+      font-size: 11px;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
+
+    .factor-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .factor-chip {
+      font-size: 11px;
+      padding: 4px 8px;
       border-radius: 999px;
-      background: linear-gradient(90deg, rgba(164, 144, 255, 0.8) 0%, rgba(89, 222, 193, 0.8) 100%);
+      background: rgba(163, 134, 255, 0.12);
+      border: 1px solid rgba(163, 134, 255, 0.28);
+      color: var(--accent);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .factor-chip.bull {
+      color: var(--bull);
+      background: rgba(61, 214, 140, 0.12);
+      border-color: rgba(61, 214, 140, 0.32);
+    }
+
+    .factor-chip.bear {
+      color: var(--bear);
+      background: rgba(255, 120, 120, 0.12);
+      border-color: rgba(255, 120, 120, 0.32);
+    }
+
+    .factor-chip.neutral {
+      color: var(--neutral);
+      background: rgba(255, 195, 90, 0.12);
+      border-color: rgba(255, 195, 90, 0.32);
+    }
+
+    .factor-note {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .factor-impact {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
     }
 
     .tags-row {
@@ -342,42 +710,156 @@
       border: 1px solid rgba(133, 149, 208, 0.24);
     }
 
-    .probabilities {
+    .trend-section {
+      margin-top: 18px;
+      background: rgba(18, 22, 34, 0.55);
+      border: 1px solid rgba(133, 149, 208, 0.22);
+      border-radius: 16px;
+      padding: 16px;
       display: grid;
-      gap: 8px;
+      gap: 14px;
     }
 
-    .prob-row {
+    .trend-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .trend-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .trend-subtitle {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .trend-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .trend-pill {
+      flex: 1 1 110px;
+      min-width: 100px;
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid rgba(133, 149, 208, 0.22);
+      background: rgba(10, 14, 24, 0.65);
       display: grid;
-      grid-template-columns: 80px 1fr 48px;
-      gap: 8px;
-      align-items: center;
+      gap: 6px;
     }
 
-    .prob-bar {
-      height: 6px;
-      background: rgba(142, 157, 227, 0.22);
-      border-radius: 999px;
-      overflow: hidden;
-      position: relative;
+    .trend-pill strong {
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
-    .prob-fill {
-      position: absolute;
-      inset: 0;
-      border-radius: 999px;
+    .trend-pill span {
+      font-size: 12px;
+      color: var(--text-secondary);
     }
 
-    .prob-bull {
-      background: linear-gradient(90deg, rgba(61, 214, 140, 0.8), rgba(125, 249, 205, 0.7));
+    .trend-pill.up {
+      border-color: rgba(61, 214, 140, 0.28);
+      background: rgba(25, 44, 36, 0.65);
     }
 
-    .prob-bear {
-      background: linear-gradient(90deg, rgba(255, 120, 120, 0.8), rgba(255, 167, 167, 0.7));
+    .trend-pill.down {
+      border-color: rgba(255, 120, 120, 0.32);
+      background: rgba(48, 24, 28, 0.6);
     }
 
-    .prob-range {
-      background: linear-gradient(90deg, rgba(255, 195, 90, 0.8), rgba(255, 228, 174, 0.7));
+    .trend-pill.range {
+      border-color: rgba(255, 195, 90, 0.28);
+      background: rgba(52, 41, 24, 0.6);
+    }
+
+    .trend-prob {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .trend-summary {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .tech-section {
+      margin-top: 18px;
+      background: rgba(12, 18, 28, 0.55);
+      border: 1px solid rgba(133, 149, 208, 0.18);
+      border-radius: 16px;
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .tech-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .tech-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .tech-card {
+      border-radius: 14px;
+      padding: 12px;
+      background: rgba(7, 11, 20, 0.78);
+      border: 1px solid rgba(133, 149, 208, 0.16);
+      display: grid;
+      gap: 6px;
+    }
+
+    .tech-card strong {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .tech-score {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .tech-score.bull {
+      color: var(--bull);
+    }
+
+    .tech-score.bear {
+      color: var(--bear);
+    }
+
+    .tech-score.neutral {
+      color: var(--neutral);
+    }
+
+    .tech-note {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.6;
     }
 
     .cta-row {
@@ -440,31 +922,54 @@
     }
 
     .source-feed-list {
+      position: relative;
       flex: 1 1 auto;
       min-height: 0;
       display: grid;
-      gap: 10px;
-      padding-bottom: 18px;
+      gap: 18px;
+      padding: 10px 0 32px 22px;
+    }
+
+    .source-feed-list::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 24px;
+      left: 12px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(163, 134, 255, 0.35), transparent 90%);
     }
 
     .source-feed-item {
       position: relative;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(14, 17, 28, 0.85);
-      border: 1px solid rgba(84, 102, 168, 0.2);
+      padding: 16px 18px 16px 28px;
+      border-radius: 18px;
+      background: rgba(14, 17, 28, 0.9);
+      border: 1px solid rgba(84, 102, 168, 0.24);
       display: grid;
-      gap: 8px;
+      gap: 10px;
       cursor: default;
     }
 
+    .source-feed-item::before {
+      content: "";
+      position: absolute;
+      left: -18px;
+      top: 22px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(163, 134, 255, 0.8);
+      box-shadow: 0 0 0 6px rgba(163, 134, 255, 0.16);
+    }
+
     .source-feed-item:hover {
-      border-color: rgba(142, 158, 238, 0.4);
-      box-shadow: 0 16px 28px -24px rgba(92, 140, 255, 0.7);
+      border-color: rgba(165, 155, 255, 0.44);
+      box-shadow: 0 18px 34px -26px rgba(92, 140, 255, 0.65);
     }
 
     .source-feed-time {
-      font-size: 12px;
+      font-size: 11px;
       color: rgba(181, 191, 242, 0.75);
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -473,7 +978,7 @@
     .source-feed-title {
       font-size: 14px;
       font-weight: 600;
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
     .source-feed-meta {
@@ -493,57 +998,34 @@
       letter-spacing: 0.08em;
     }
 
-    .source-tooltip {
-      position: absolute;
-      top: calc(100% + 12px);
-      left: 50%;
-      transform: translate(-50%, 6px);
-      width: min(320px, 100%, calc(100vw - 64px));
-      background: rgba(14, 16, 27, 0.96);
-      border: 1px solid rgba(94, 112, 194, 0.3);
-      border-radius: 16px;
-      padding: 18px;
-      box-shadow: 0 24px 42px -24px rgba(16, 18, 36, 0.85);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.18s ease, transform 0.18s ease;
-      z-index: 20;
-      display: grid;
-      gap: 8px;
-      pointer-events: none;
-    }
-
-    .source-feed-item:hover .source-tooltip {
-      opacity: 1;
-      visibility: visible;
-      transform: translate(-50%, 0);
-    }
-
-    .source-tooltip strong {
-      font-size: 13px;
-    }
-
-    .source-tooltip p {
+    .source-feed-summary,
+    .source-feed-detail {
       font-size: 12px;
-      color: rgba(196, 206, 255, 0.76);
-      line-height: 1.6;
+      color: var(--text-secondary);
+      line-height: 1.68;
     }
 
-    .source-tooltip .tooltip-ai {
-      font-size: 12px;
-      color: rgba(178, 214, 255, 0.82);
+    .source-feed-ai {
+      margin-top: 2px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(16, 22, 36, 0.78);
+      border: 1px solid rgba(123, 153, 255, 0.28);
       display: grid;
-      gap: 4px;
+      gap: 6px;
+      font-size: 12px;
+      color: rgba(196, 206, 255, 0.86);
     }
 
-    .source-tooltip .tooltip-ai span {
+    .source-feed-ai span {
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: rgba(212, 220, 255, 0.9);
+      color: rgba(163, 134, 255, 0.85);
     }
 
     .signal-area {
@@ -582,7 +1064,7 @@
       position: fixed;
       top: 0;
       right: 0;
-      width: min(620px, 94vw);
+      width: min(980px, 94vw);
       height: 100vh;
       background: rgba(10, 12, 22, 0.98);
       box-shadow: -24px 0 48px -28px rgba(0, 0, 0, 0.65);
@@ -596,6 +1078,14 @@
 
     .detail-drawer.active {
       transform: translateX(0);
+    }
+
+    .detail-drawer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(123, 92, 255, 0.06), transparent 60%);
+      pointer-events: none;
     }
 
     .drawer-header {
@@ -762,26 +1252,189 @@
       text-align: right;
     }
 
-    .chart-shell {
-      background: linear-gradient(180deg, rgba(29, 36, 62, 0.65) 0%, rgba(15, 17, 28, 0.85) 100%);
+    .market-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .chart-panel {
+      background: linear-gradient(180deg, rgba(29, 36, 62, 0.65) 0%, rgba(15, 17, 28, 0.88) 100%);
       border: 1px solid rgba(109, 135, 214, 0.18);
       border-radius: 18px;
       padding: 18px;
-      position: relative;
+      display: grid;
+      gap: 14px;
     }
 
-    .chart-header {
+    .chart-toolbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      gap: 14px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .chart-tabs,
+    .indicator-tabs {
+      display: inline-flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chart-tab {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(123, 153, 255, 0.24);
+      background: rgba(19, 24, 42, 0.76);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .chart-tab.active {
+      background: rgba(123, 92, 255, 0.25);
+      border-color: rgba(163, 134, 255, 0.6);
+      color: var(--text-primary);
+    }
+
+    .chart-canvas {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 240px;
+      background: radial-gradient(circle at 20% 20%, rgba(163, 134, 255, 0.22), transparent 55%), rgba(8, 12, 24, 0.92);
+      display: grid;
+      place-items: center;
+    }
+
+    .chart-placeholder {
+      text-align: center;
+      display: grid;
+      gap: 10px;
       color: var(--text-secondary);
       font-size: 12px;
     }
 
-    svg {
+    body[data-openstock="connected"] .chart-placeholder {
+      display: none;
+    }
+
+    .chart-placeholder svg {
       width: 100%;
-      height: 180px;
+      max-width: 560px;
+      height: 200px;
+      opacity: 0.9;
+    }
+
+    .chart-meta {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .chart-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chart-meta span::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(163, 134, 255, 0.6);
+    }
+
+    .side-panels {
+      display: grid;
+      gap: 14px;
+    }
+
+    .depth-panel,
+    .tape-panel {
+      background: rgba(14, 16, 28, 0.88);
+      border: 1px solid rgba(109, 135, 214, 0.18);
+      border-radius: 16px;
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .depth-grid {
+      display: grid;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .order-row {
+      display: grid;
+      grid-template-columns: 44px 1fr 70px;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .order-row .bar {
+      position: relative;
+      height: 6px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(123, 153, 255, 0.12);
+    }
+
+    .order-row .bar::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+    }
+
+    .order-row.buy .bar::after {
+      background: linear-gradient(90deg, rgba(61, 214, 140, 0.32), rgba(61, 214, 140, 0.08));
+      width: var(--size, 30%);
+    }
+
+    .order-row.sell .bar::after {
+      background: linear-gradient(90deg, rgba(255, 120, 120, 0.32), rgba(255, 120, 120, 0.08));
+      width: var(--size, 30%);
+    }
+
+    .tape-list {
+      display: grid;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .tape-item {
+      display: grid;
+      grid-template-columns: 64px 1fr 72px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .tape-item.buy {
+      color: var(--bull);
+    }
+
+    .tape-item.sell {
+      color: var(--bear);
     }
 
     .info-list {
@@ -981,6 +1634,24 @@
       .source-feed-item:hover .source-tooltip {
         transform: translateY(0);
       }
+
+      .market-panel {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .side-panels {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .detail-drawer {
+        width: min(92vw, 880px);
+      }
+
+      .market-panel {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
     @media (max-width: 720px) {
@@ -1012,8 +1683,45 @@
         gap: 16px;
       }
 
-      .factor-grid {
+      .trend-section {
+        padding: 14px;
+      }
+
+      .quote-card {
+        padding: 12px;
+      }
+
+      .trend-grid {
+        flex-direction: column;
+      }
+
+      .trend-pill {
+        width: 100%;
+      }
+
+      .tech-grid {
         grid-template-columns: minmax(0, 1fr);
+      }
+
+      .chart-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .chart-tabs,
+      .indicator-tabs {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .detail-drawer {
+        width: 96vw;
+      }
+
+      .factor-insights {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 14px;
       }
 
       .source-panel {
@@ -1047,31 +1755,70 @@
 
     <div class="page">
       <header>
-        <div class="brand">
-          <div class="brand-badge">TT</div>
-          <div class="brand-content">
-            <h1>Trumpto 情报终端 · MVP</h1>
-            <p>事件驱动的垂直化交易情报平台，实时捕捉特朗普及相关生态的言论、链上与市场信号，将碎片化信息转化为可执行的多市场套利策略。</p>
+        <section class="market-hero">
+          <div class="hero-primary">
+            <div class="hero-identity">
+              <div class="brand-badge">TT</div>
+              <div>
+                <h1>Trumpto 情报终端 · MVP</h1>
+                <p>事件驱动的垂直化交易情报平台，实时捕捉特朗普及相关生态的言论、链上与市场信号，将碎片化信息转化为可执行的多市场套利策略。</p>
+              </div>
+            </div>
+            <div class="hero-price">
+              <div>
+                <span class="hero-symbol">Trump Index 合成指数</span>
+                <div class="hero-value">7,482</div>
+              </div>
+              <div class="hero-change">
+                <span class="change-value up">+2.6%</span>
+                <span class="change-note">24h</span>
+              </div>
+            </div>
+            <div class="hero-meta">
+              <div class="hero-meta-item">
+                <span>覆盖资产</span>
+                <strong>12</strong>
+                <span>新闻 / 社媒 / 链上 / ETF</span>
+              </div>
+              <div class="hero-meta-item">
+                <span>策略库</span>
+                <strong>38</strong>
+                <span>已验证 23 · 待验证 5</span>
+              </div>
+              <div class="hero-meta-item">
+                <span>信号强度</span>
+                <strong>88/100</strong>
+                <span>AI 综合评分最高 WFLI</span>
+              </div>
+            </div>
           </div>
+          <aside class="hero-secondary">
+            <div class="hero-stat">
+              <span class="stat-label">事件热度</span>
+              <strong class="stat-value up">+12%</strong>
+              <span class="stat-note">Trump Index 今日变化</span>
+            </div>
+            <div class="hero-stat">
+              <span class="stat-label">套利提案</span>
+              <strong class="stat-value">5</strong>
+              <span class="stat-note">平均跨市场价差 2.1%</span>
+            </div>
+            <div class="hero-stat">
+              <span class="stat-label">数据刷新</span>
+              <strong class="stat-value">10:18</strong>
+              <span class="stat-note">2024-05-27</span>
+            </div>
+            <div class="hero-stat">
+              <span class="stat-label">监控渠道</span>
+              <strong class="stat-value">32</strong>
+              <span class="stat-note">新闻 10 · 社媒 12 · 链上 6 · ETF 4</span>
+            </div>
+          </aside>
+        </section>
+        <div class="hero-ticker">
+          <div class="ticker-label">监控资产</div>
+          <div class="ticker-row" id="priceTicker"></div>
         </div>
-        <div class="kpi-row">
-          <div class="kpi-card">
-            <span class="kpi-label">事件监控覆盖</span>
-            <span class="kpi-value">12 信号源</span>
-            <span style="color: var(--text-secondary); font-size: 12px;">新闻、社媒、链上、ETF、政策发布</span>
-          </div>
-          <div class="kpi-card">
-            <span class="kpi-label">最后更新时间</span>
-            <span class="kpi-value">2024-05-27 · 10:18</span>
-            <span style="color: var(--text-secondary); font-size: 12px;">Trump Index 事件热度 +12%</span>
-          </div>
-          <div class="kpi-card">
-            <span class="kpi-label">套利提案</span>
-            <span class="kpi-value">5 个待验证</span>
-            <span style="color: var(--text-secondary); font-size: 12px;">跨市场价差平均 2.1%</span>
-          </div>
-        </div>
-        <div class="kpi-row" id="priceTicker"></div>
       </header>
 
       <main class="signal-area">
@@ -1092,7 +1839,21 @@
                   <span>World Liberty Financial</span>
                   <span class="direction-tag direction-long">做多</span>
                 </div>
-                <div style="color: var(--text-secondary); font-size: 12px;">触发时间 · 10:12 · Trump Index 热度 +18%</div>
+                <div class="asset-meta-line">触发时间 · 10:12 · Trump Index 热度 +18%</div>
+                <div class="quote-card up">
+                  <div class="quote-top">
+                    <span>即时行情</span>
+                    <span>更新时间 · 10:18</span>
+                  </div>
+                  <div class="quote-main">
+                    <span class="quote-price">$1.34</span>
+                    <span class="quote-change up">+5.2%</span>
+                  </div>
+                  <div class="quote-meta">
+                    <span>成交量 $94M</span>
+                    <span>来源 4 条</span>
+                  </div>
+                </div>
               </div>
               <div class="score-block">
                 <div class="score-value">88</div>
@@ -1107,65 +1868,124 @@
               <span class="signal-tag">CME 资金费率转正</span>
             </div>
 
-            <div class="factor-grid">
-              <div class="factor-row">
-                <span>价格行为</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:25%;"></span>
+            <div class="trend-section">
+              <div class="trend-head">
+                <div>
+                  <div class="trend-title">AI 趋势预判</div>
+                  <div class="trend-subtitle">未来 6 小时走势概率</div>
                 </div>
-                <span>25%</span>
+                <div class="trend-subtitle">更新 · 10:18</div>
               </div>
-              <div class="factor-row">
-                <span>衍生品信号</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:25%;"></span>
+              <div class="trend-grid">
+                <div class="trend-pill up">
+                  <strong>上涨</strong>
+                  <div class="trend-prob">54%</div>
+                  <span>社媒热度与链上资金共振支撑做多。</span>
                 </div>
-                <span>25%</span>
+                <div class="trend-pill down">
+                  <strong>下跌</strong>
+                  <div class="trend-prob">24%</div>
+                  <span>若竞选叙事降温，动量将迅速回落。</span>
+                </div>
+                <div class="trend-pill range">
+                  <strong>震荡</strong>
+                  <div class="trend-prob">22%</div>
+                  <span>盘中可能在 1.28-1.35 区间换手。</span>
+                </div>
               </div>
-              <div class="factor-row">
-                <span>链上行为</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:20%;"></span>
-                </div>
-                <span>20%</span>
+              <div class="trend-summary">AI 总结：情绪与资金面同步强化，模型建议在直播节点前维持多头仓位，并关注动量减速信号及时减仓。</div>
+            </div>
+
+            <div class="tech-section">
+              <div class="tech-head">
+                <span class="tech-title">技术面洞察</span>
+                <span class="trend-subtitle">指标基于 30m / 4h 双周期</span>
               </div>
-              <div class="factor-row">
-                <span>宏观 / ETF</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:20%;"></span>
+              <div class="tech-grid">
+                <div class="tech-card">
+                  <strong>趋势</strong>
+                  <div class="tech-score bull">+18</div>
+                  <div class="tech-note">MA5 上穿 MA20，价格站稳上轨，趋势指标同步放量。</div>
                 </div>
-                <span>20%</span>
-              </div>
-              <div class="factor-row">
-                <span>Trump 垂直事件</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:10%;"></span>
+                <div class="tech-card">
+                  <strong>动量</strong>
+                  <div class="tech-score bull">+22</div>
+                  <div class="tech-note">RSI 维持 64，MACD DIF 再度开口，多头动能延续。</div>
                 </div>
-                <span>10%</span>
+                <div class="tech-card">
+                  <strong>波动</strong>
+                  <div class="tech-score neutral">12</div>
+                  <div class="tech-note">隐含波动回落至 48%，保持可控，有利顺势加仓。</div>
+                </div>
+                <div class="tech-card">
+                  <strong>买卖力</strong>
+                  <div class="tech-score bull">+14</div>
+                  <div class="tech-note">买卖盘净流入 +2.6M，盘口溢价持续，两档深度平衡。</div>
+                </div>
               </div>
             </div>
 
-            <div class="probabilities">
-              <div class="prob-row">
-                <span style="color: var(--bull);">上涨</span>
-                <div class="prob-bar">
-                  <span class="prob-fill prob-bull" style="width: 54%;"></span>
-                </div>
-                <span>54%</span>
+            <div class="factor-breakdown">
+              <div class="factor-section-head">
+                <span class="factor-section-title">驱动拆解</span>
+                <span class="factor-section-note">执行重点：社媒热度与链上共振 → 顺势加仓</span>
               </div>
-              <div class="prob-row">
-                <span style="color: var(--bear);">下跌</span>
-                <div class="prob-bar">
-                  <span class="prob-fill prob-bear" style="width: 24%;"></span>
+              <div class="factor-insights">
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>价格行为</span>
+                    <span class="factor-weight">25%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bull">动量增强</span>
+                  </div>
+                  <p class="factor-note">盘前突破 1.30 阻力并伴随成交量放大，模型将入场判定从“等待”升级为“即刻执行”。</p>
+                  <div class="factor-impact">执行提示：触发后 5 分钟内分批追多。</div>
                 </div>
-                <span>24%</span>
-              </div>
-              <div class="prob-row">
-                <span style="color: var(--neutral);">震荡</span>
-                <div class="prob-bar">
-                  <span class="prob-fill prob-range" style="width: 22%;"></span>
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>衍生品信号</span>
+                    <span class="factor-weight">25%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bull">杠杆共振</span>
+                  </div>
+                  <p class="factor-note">CME 永续资金费转正并伴随 OI 扩张 7%，强化多头杠杆对社媒叙事的跟随。</p>
+                  <div class="factor-impact">执行提示：将目标价上调至 1.40，美股开盘前保留加仓弹性。</div>
                 </div>
-                <span>22%</span>
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>链上行为</span>
+                    <span class="factor-weight">20%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bull">鲸鱼净买</span>
+                  </div>
+                  <p class="factor-note">0x9F…a21 地址净流入 4.6M WFLI，历史与竞选基金关联，提升事件驱动可信度。</p>
+                  <div class="factor-impact">执行提示：保持仓位至少 2 小时，观察是否有追加买单。</div>
+                </div>
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>宏观 / ETF</span>
+                    <span class="factor-weight">20%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip neutral">美元回落</span>
+                  </div>
+                  <p class="factor-note">美元指数回落与相关 ETF 维持净流入，提供背景支撑但节奏较缓。</p>
+                  <div class="factor-impact">执行提示：维持 1 倍风险敞口，无需提前减仓。</div>
+                </div>
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>Trump 垂直事件</span>
+                    <span class="factor-weight">10%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bull">竞选催化</span>
+                  </div>
+                  <p class="factor-note">竞选办公室宣布合作提供额外情绪溢价，但易受突发舆情波动。</p>
+                  <div class="factor-impact">执行提示：密切跟踪直播节点，防范短期回吐。</div>
+                </div>
               </div>
             </div>
 
@@ -1183,7 +2003,21 @@
                   <span>Bitcoin / Trump Index 配比 30%</span>
                   <span class="direction-tag direction-short">做空</span>
                 </div>
-                <div style="color: var(--text-secondary); font-size: 12px;">触发时间 · 09:45 · ETF 流入放缓</div>
+                <div class="asset-meta-line">触发时间 · 09:45 · ETF 流入放缓</div>
+                <div class="quote-card down">
+                  <div class="quote-top">
+                    <span>即时行情</span>
+                    <span>更新时间 · 09:48</span>
+                  </div>
+                  <div class="quote-main">
+                    <span class="quote-price">$66,120</span>
+                    <span class="quote-change down">-1.8%</span>
+                  </div>
+                  <div class="quote-meta">
+                    <span>成交量 $18.4B</span>
+                    <span>来源 3 条</span>
+                  </div>
+                </div>
               </div>
               <div class="score-block">
                 <div class="score-value">74</div>
@@ -1197,65 +2031,124 @@
               <span class="signal-tag">期权 Put/Call 比率 1.7</span>
             </div>
 
-            <div class="factor-grid">
-              <div class="factor-row">
-                <span>价格行为</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:28%;"></span>
+            <div class="trend-section">
+              <div class="trend-head">
+                <div>
+                  <div class="trend-title">AI 趋势预判</div>
+                  <div class="trend-subtitle">未来 6 小时走势概率</div>
                 </div>
-                <span>28%</span>
+                <div class="trend-subtitle">更新 · 09:48</div>
               </div>
-              <div class="factor-row">
-                <span>衍生品信号</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:27%;"></span>
+              <div class="trend-grid">
+                <div class="trend-pill up">
+                  <strong>上涨</strong>
+                  <div class="trend-prob">28%</div>
+                  <span>若 ETF 流出止住且美元回落，有修复空间。</span>
                 </div>
-                <span>27%</span>
+                <div class="trend-pill down">
+                  <strong>下跌</strong>
+                  <div class="trend-prob">51%</div>
+                  <span>ETF 净流出与衍生品空头仍主导节奏。</span>
+                </div>
+                <div class="trend-pill range">
+                  <strong>震荡</strong>
+                  <div class="trend-prob">21%</div>
+                  <span>或围绕 65,800-66,800 进行区间博弈。</span>
+                </div>
               </div>
-              <div class="factor-row">
-                <span>链上行为</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:19%;"></span>
-                </div>
-                <span>19%</span>
+              <div class="trend-summary">AI 总结：资金面偏空且矿工卖压增强，建议以分批放空为主，同时保留快速回补机制以应对突发舆情带来的反抽。</div>
+            </div>
+
+            <div class="tech-section">
+              <div class="tech-head">
+                <span class="tech-title">技术面洞察</span>
+                <span class="trend-subtitle">指标基于 1h / 4h 双周期</span>
               </div>
-              <div class="factor-row">
-                <span>宏观 / ETF</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:16%;"></span>
+              <div class="tech-grid">
+                <div class="tech-card">
+                  <strong>趋势</strong>
+                  <div class="tech-score bear">-12</div>
+                  <div class="tech-note">MA50 下穿 MA200，价格保持在中轨下方，长短期均线空头排列。</div>
                 </div>
-                <span>16%</span>
-              </div>
-              <div class="factor-row">
-                <span>Trump 垂直事件</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:10%;"></span>
+                <div class="tech-card">
+                  <strong>动量</strong>
+                  <div class="tech-score bear">-16</div>
+                  <div class="tech-note">RSI 42 未脱离弱势区，MACD 继续走低，动能柱扩大。</div>
                 </div>
-                <span>10%</span>
+                <div class="tech-card">
+                  <strong>波动</strong>
+                  <div class="tech-score neutral">9</div>
+                  <div class="tech-note">隐含波动升至 54%，短线可能出现急跌急拉，需要严控仓位。</div>
+                </div>
+                <div class="tech-card">
+                  <strong>买卖力</strong>
+                  <div class="tech-score bear">-18</div>
+                  <div class="tech-note">盘口上行深度缩减 22%，卖盘主动量依旧占优，资金净流出。</div>
+                </div>
               </div>
             </div>
 
-            <div class="probabilities">
-              <div class="prob-row">
-                <span style="color: var(--bull);">上涨</span>
-                <div class="prob-bar">
-                  <span class="prob-fill prob-bull" style="width: 28%;"></span>
-                </div>
-                <span>28%</span>
+            <div class="factor-breakdown">
+              <div class="factor-section-head">
+                <span class="factor-section-title">驱动拆解</span>
+                <span class="factor-section-note">执行重点：ETF 净流出与期权偏空 → 限价放空</span>
               </div>
-              <div class="prob-row">
-                <span style="color: var(--bear);">下跌</span>
-                <div class="prob-bar">
-                  <span class="prob-fill prob-bear" style="width: 51%;"></span>
+              <div class="factor-insights">
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>价格行为</span>
+                    <span class="factor-weight">28%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bear">阻力确认</span>
+                  </div>
+                  <p class="factor-note">价格三次上攻 68,000 美元未果，高点下移触发趋势反转评分。</p>
+                  <div class="factor-impact">执行提示：67,400 附近挂空单，触发后逐步放大仓位。</div>
                 </div>
-                <span>51%</span>
-              </div>
-              <div class="prob-row">
-                <span style="color: var(--neutral);">震荡</span>
-                <div class="prob-bar">
-                  <span class="prob-fill prob-range" style="width: 21%;"></span>
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>衍生品信号</span>
+                    <span class="factor-weight">27%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bear">Put/Call 1.7</span>
+                  </div>
+                  <p class="factor-note">Put/Call 升至 1.7，CME 空头 OI 增长 9%，显示下行套保与杠杆空单共振。</p>
+                  <div class="factor-impact">执行提示：优先使用期货空单与跨市场价差对冲。</div>
                 </div>
-                <span>21%</span>
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>链上行为</span>
+                    <span class="factor-weight">19%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bear">矿工卖压</span>
+                  </div>
+                  <p class="factor-note">矿工地址向交易所净流入提升 12%，说明现货抛压可能延续至美盘。</p>
+                  <div class="factor-impact">执行提示：监控矿工流动性曲线，放大仓位需确认继续流入。</div>
+                </div>
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>宏观 / ETF</span>
+                    <span class="factor-weight">16%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bear">ETF 净流出</span>
+                  </div>
+                  <p class="factor-note">美国现货 ETF 连续两日净流出，压制反弹力度并为做空策略背书。</p>
+                  <div class="factor-impact">执行提示：将目标位下调至 65,800 美元，止损保持 66,280。</div>
+                </div>
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>Trump 垂直事件</span>
+                    <span class="factor-weight">10%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip neutral">舆情波动</span>
+                  </div>
+                  <p class="factor-note">特朗普相关消息面缺乏新的利好，但若临时利好出现可能迅速推高价格。</p>
+                  <div class="factor-impact">执行提示：需设置即时警报，出现正面言论时快速减仓。</div>
+                </div>
               </div>
             </div>
 
@@ -1273,7 +2166,21 @@
                   <span>DJT / NASDAQ</span>
                   <span class="direction-tag direction-long">做多</span>
                 </div>
-                <div style="color: var(--text-secondary); font-size: 12px;">触发时间 · 08:58 · 社媒热度爆发</div>
+                <div class="asset-meta-line">触发时间 · 08:58 · 社媒热度爆发</div>
+                <div class="quote-card up">
+                  <div class="quote-top">
+                    <span>即时行情</span>
+                    <span>更新时间 · 09:10</span>
+                  </div>
+                  <div class="quote-main">
+                    <span class="quote-price">$64.20</span>
+                    <span class="quote-change up">+6.1%</span>
+                  </div>
+                  <div class="quote-meta">
+                    <span>成交量 $860M</span>
+                    <span>来源 3 条</span>
+                  </div>
+                </div>
               </div>
               <div class="score-block">
                 <div class="score-value">81</div>
@@ -1287,65 +2194,124 @@
               <span class="signal-tag">加密地址转入 DJT 生态基金</span>
             </div>
 
-            <div class="factor-grid">
-              <div class="factor-row">
-                <span>价格行为</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:22%;"></span>
+            <div class="trend-section">
+              <div class="trend-head">
+                <div>
+                  <div class="trend-title">AI 趋势预判</div>
+                  <div class="trend-subtitle">未来 6 小时走势概率</div>
                 </div>
-                <span>22%</span>
+                <div class="trend-subtitle">更新 · 09:10</div>
               </div>
-              <div class="factor-row">
-                <span>衍生品信号</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:18%;"></span>
+              <div class="trend-grid">
+                <div class="trend-pill up">
+                  <strong>上涨</strong>
+                  <div class="trend-prob">62%</div>
+                  <span>直播带动盘前量能，动量延续概率最高。</span>
                 </div>
-                <span>18%</span>
+                <div class="trend-pill down">
+                  <strong>下跌</strong>
+                  <div class="trend-prob">18%</div>
+                  <span>若直播效果不及预期，易出现情绪回吐。</span>
+                </div>
+                <div class="trend-pill range">
+                  <strong>震荡</strong>
+                  <div class="trend-prob">20%</div>
+                  <span>预期在 62-66 区间消化机构筹码。</span>
+                </div>
               </div>
-              <div class="factor-row">
-                <span>链上行为</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:21%;"></span>
-                </div>
-                <span>21%</span>
+              <div class="trend-summary">AI 总结：事件热度推高盘前成交，策略上建议在直播进行期间逐步加码，直播结束前主动锁定利润以防情绪快速回落。</div>
+            </div>
+
+            <div class="tech-section">
+              <div class="tech-head">
+                <span class="tech-title">技术面洞察</span>
+                <span class="trend-subtitle">指标基于 15m / 1h 双周期</span>
               </div>
-              <div class="factor-row">
-                <span>宏观 / ETF</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:27%;"></span>
+              <div class="tech-grid">
+                <div class="tech-card">
+                  <strong>趋势</strong>
+                  <div class="tech-score bull">+21</div>
+                  <div class="tech-note">短期均线多头排列，价格处于布林上轨，趋势仍偏强。</div>
                 </div>
-                <span>27%</span>
-              </div>
-              <div class="factor-row">
-                <span>Trump 垂直事件</span>
-                <div class="factor-bar">
-                  <span class="factor-fill" style="width:12%;"></span>
+                <div class="tech-card">
+                  <strong>动量</strong>
+                  <div class="tech-score bull">+17</div>
+                  <div class="tech-note">Stoch 指标维持高位，OBV 创新高，多头动量未见衰减。</div>
                 </div>
-                <span>12%</span>
+                <div class="tech-card">
+                  <strong>波动</strong>
+                  <div class="tech-score neutral">11</div>
+                  <div class="tech-note">IV 处于 50% 附近，波动温和但随直播可能扩大。</div>
+                </div>
+                <div class="tech-card">
+                  <strong>买卖力</strong>
+                  <div class="tech-score bull">+19</div>
+                  <div class="tech-note">买盘深度较卖盘高出 1.6 倍，主动买入量保持高位。</div>
+                </div>
               </div>
             </div>
 
-            <div class="probabilities">
-              <div class="prob-row">
-                <span style="color: var(--bull);">上涨</span>
-                <div class="prob-bar">
-                  <span class="prob-fill prob-bull" style="width: 62%;"></span>
-                </div>
-                <span>62%</span>
+            <div class="factor-breakdown">
+              <div class="factor-section-head">
+                <span class="factor-section-title">驱动拆解</span>
+                <span class="factor-section-note">执行重点：事件热度与盘前量能爆发 → 即时追多</span>
               </div>
-              <div class="prob-row">
-                <span style="color: var(--bear);">下跌</span>
-                <div class="prob-bar">
-                  <span class="prob-fill prob-bear" style="width: 18%;"></span>
+              <div class="factor-insights">
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>价格行为</span>
+                    <span class="factor-weight">22%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bull">量价共振</span>
+                  </div>
+                  <p class="factor-note">盘前成交量放大 220%，股价脱离震荡区间，触发多头动量评分。</p>
+                  <div class="factor-impact">执行提示：开盘前建立 15% 基础仓位，突破盘中高点再加码。</div>
                 </div>
-                <span>18%</span>
-              </div>
-              <div class="prob-row">
-                <span style="color: var(--neutral);">震荡</span>
-                <div class="prob-bar">
-                  <span class="prob-fill prob-range" style="width: 20%;"></span>
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>衍生品信号</span>
+                    <span class="factor-weight">18%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bull">看涨偏好</span>
+                  </div>
+                  <p class="factor-note">短期看涨期权隐含波动率抬升 18%，显示市场押注直播节点利好。</p>
+                  <div class="factor-impact">执行提示：考虑价差组合控制下行风险，目标收益 12%。</div>
                 </div>
-                <span>20%</span>
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>链上行为</span>
+                    <span class="factor-weight">21%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bull">资金转入</span>
+                  </div>
+                  <p class="factor-note">DJT 生态基金地址出现大额转入，说明链上资金提前埋伏直播带动需求。</p>
+                  <div class="factor-impact">执行提示：链上净流入持续时保持仓位，若流入减弱优先锁盈。</div>
+                </div>
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>宏观 / ETF</span>
+                    <span class="factor-weight">27%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bull">风险偏好</span>
+                  </div>
+                  <p class="factor-note">纳指期货上行叠加共和党主题 ETF 收涨，为事件交易提供外部流动性。</p>
+                  <div class="factor-impact">执行提示：允许仓位扩大至 1.3 倍，但需与盘前波动挂钩。</div>
+                </div>
+                <div class="factor-insight">
+                  <div class="factor-insight-header">
+                    <span>Trump 垂直事件</span>
+                    <span class="factor-weight">12%</span>
+                  </div>
+                  <div class="factor-chips">
+                    <span class="factor-chip bull">直播加持</span>
+                  </div>
+                  <p class="factor-note">特朗普直播预告拉升社媒热度，情绪驱动信号有效但时效短。</p>
+                  <div class="factor-impact">执行提示：直播结束前逐步减仓，防止情绪退潮回吐。</div>
+                </div>
               </div>
             </div>
 
@@ -1394,15 +2360,115 @@
         <p class="score-summary" id="drawerSummary">AI 模型正在汇总信号...</p>
       </div>
 
-      <div class="chart-shell">
-        <div class="chart-header">
-          <span>24h 模拟行情</span>
-          <span id="drawerVolume">成交量 · --</span>
+      <div class="market-panel">
+        <div class="chart-panel">
+          <div class="chart-toolbar">
+            <div class="chart-tabs">
+              <button class="chart-tab active" type="button">1m</button>
+              <button class="chart-tab" type="button">5m</button>
+              <button class="chart-tab" type="button">15m</button>
+              <button class="chart-tab" type="button">1h</button>
+              <button class="chart-tab" type="button">4h</button>
+              <button class="chart-tab" type="button">1d</button>
+            </div>
+            <div class="indicator-tabs">
+              <button class="chart-tab active" type="button">MA</button>
+              <button class="chart-tab" type="button">EMA</button>
+              <button class="chart-tab" type="button">BOLL</button>
+              <button class="chart-tab" type="button">VOL</button>
+            </div>
+          </div>
+          <div class="chart-canvas">
+            <div class="chart-placeholder">
+              <svg viewBox="0 0 480 220" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(163,134,255,0.6)" />
+                    <stop offset="100%" stop-color="rgba(163,134,255,0.05)" />
+                  </linearGradient>
+                </defs>
+                <path d="M0 160 L40 150 L80 158 L120 120 L160 132 L200 110 L240 142 L280 98 L320 112 L360 86 L400 96 L440 70 L480 88" fill="none" stroke="#8d78ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M0 220 L0 160 L40 150 L80 158 L120 120 L160 132 L200 110 L240 142 L280 98 L320 112 L360 86 L400 96 L440 70 L480 88 L480 220 Z" fill="url(#chartGradient)" opacity="0.6"/>
+                <rect x="0" y="190" width="480" height="2" fill="rgba(255,255,255,0.06)"/>
+              </svg>
+              <span>实时 K 线由 OpenStock · Lightweight Charts 驱动</span>
+            </div>
+          </div>
+          <div class="chart-meta">
+            <span>开盘价 <strong id="drawerOpen">--</strong></span>
+            <span>最高价 <strong id="drawerHigh">--</strong></span>
+            <span>最低价 <strong id="drawerLow">--</strong></span>
+            <span id="drawerVolume">成交量 · --</span>
+          </div>
         </div>
-        <svg viewBox="0 0 320 180" preserveAspectRatio="none">
-          <polyline id="drawerLineChart" fill="none" stroke="#8d78ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points=""></polyline>
-          <polyline id="drawerAreaGradient" fill="url(#areaFill)" stroke="none" points=""></polyline>
-        </svg>
+        <div class="side-panels">
+          <div class="depth-panel">
+            <div class="panel-head">
+              <span>市场深度</span>
+              <span>实时订单簿</span>
+            </div>
+            <div class="depth-grid">
+              <div class="order-row buy" style="--size: 72%;">
+                <span>买1</span>
+                <div class="bar"></div>
+                <span>$1.32 · 680k</span>
+              </div>
+              <div class="order-row buy" style="--size: 54%;">
+                <span>买2</span>
+                <div class="bar"></div>
+                <span>$1.31 · 540k</span>
+              </div>
+              <div class="order-row buy" style="--size: 38%;">
+                <span>买3</span>
+                <div class="bar"></div>
+                <span>$1.30 · 410k</span>
+              </div>
+              <div class="order-row sell" style="--size: 50%;">
+                <span>卖1</span>
+                <div class="bar"></div>
+                <span>$1.35 · 520k</span>
+              </div>
+              <div class="order-row sell" style="--size: 32%;">
+                <span>卖2</span>
+                <div class="bar"></div>
+                <span>$1.36 · 300k</span>
+              </div>
+              <div class="order-row sell" style="--size: 18%;">
+                <span>卖3</span>
+                <div class="bar"></div>
+                <span>$1.37 · 180k</span>
+              </div>
+            </div>
+          </div>
+          <div class="tape-panel">
+            <div class="panel-head">
+              <span>最新成交</span>
+              <span>Tape · 15s</span>
+            </div>
+            <div class="tape-list">
+              <div class="tape-item buy">
+                <span>10:18:22</span>
+                <span>$1.34</span>
+                <span>+120k</span>
+              </div>
+              <div class="tape-item buy">
+                <span>10:18:18</span>
+                <span>$1.339</span>
+                <span>+80k</span>
+              </div>
+              <div class="tape-item sell">
+                <span>10:18:11</span>
+                <span>$1.338</span>
+                <span>-65k</span>
+              </div>
+              <div class="tape-item buy">
+                <span>10:18:05</span>
+                <span>$1.341</span>
+                <span>+95k</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="drawer-section">
@@ -1771,8 +2837,6 @@
     const detailDrawer = document.getElementById("detailDrawer");
     const drawerBackdrop = document.getElementById("drawerBackdrop");
     const drawerCloseBtn = document.getElementById("drawerCloseBtn");
-    const lineChart = document.getElementById("drawerLineChart");
-    const areaGradient = document.getElementById("drawerAreaGradient");
 
     const drawerRefs = {
       title: document.getElementById("drawerTitle"),
@@ -1785,12 +2849,41 @@
       summary: document.getElementById("drawerSummary"),
       statsVolume: document.getElementById("drawerStatVolume"),
       statsSources: document.getElementById("drawerStatSources"),
+      open: document.getElementById("drawerOpen"),
+      high: document.getElementById("drawerHigh"),
+      low: document.getElementById("drawerLow"),
       sources: document.getElementById("drawerSources"),
       sourcesCount: document.getElementById("drawerSourcesCount"),
       strategies: document.getElementById("drawerStrategies")
     };
 
     const sourceFeedList = document.getElementById("sourceFeedList");
+
+    function initOpenStockBridge() {
+      try {
+        if (window.OpenStock?.init) {
+          const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#a386ff";
+          window.OpenStock.init({
+            theme: "dark",
+            accent,
+            locale: "zh-cn"
+          });
+          document.body.dataset.openstock = "connected";
+        } else {
+          document.body.dataset.openstock = "fallback";
+        }
+      } catch (error) {
+        document.body.dataset.openstock = "fallback";
+        console.warn("OpenStock bridge init failed", error);
+      }
+    }
+
+    function formatPriceValue(value) {
+      if (value === null || value === undefined || Number.isNaN(value)) return "--";
+      const abs = Math.abs(value);
+      const options = abs >= 100 ? { maximumFractionDigits: 0 } : { minimumFractionDigits: 2, maximumFractionDigits: 2 };
+      return value.toLocaleString("en-US", options);
+    }
 
     function formatChartPoints(values, width = 320, height = 180) {
       if (!Array.isArray(values) || !values.length) return "";
@@ -1915,6 +3008,20 @@
       drawerRefs.volume.textContent = data.volume;
       drawerRefs.summary.textContent = data.summary;
 
+      const chartValues = Array.isArray(data.chart) ? data.chart : [];
+      if (chartValues.length) {
+        const open = chartValues[0];
+        const high = Math.max(...chartValues);
+        const low = Math.min(...chartValues);
+        if (drawerRefs.open) drawerRefs.open.textContent = `$${formatPriceValue(open)}`;
+        if (drawerRefs.high) drawerRefs.high.textContent = `$${formatPriceValue(high)}`;
+        if (drawerRefs.low) drawerRefs.low.textContent = `$${formatPriceValue(low)}`;
+      } else {
+        if (drawerRefs.open) drawerRefs.open.textContent = "--";
+        if (drawerRefs.high) drawerRefs.high.textContent = "--";
+        if (drawerRefs.low) drawerRefs.low.textContent = "--";
+      }
+
       const volumeValue = typeof data.volume === "string" && data.volume.includes("·")
         ? data.volume.split("·").pop().trim()
         : data.volume;
@@ -1941,10 +3048,6 @@
             <div class="strategy-notes">${strategy.notes}</div>
           </div>
         `).join("");
-
-      const points = formatChartPoints(data.chart);
-      lineChart.setAttribute("points", points);
-      areaGradient.setAttribute("points", formatAreaPoints(data.chart) || "");
 
       detailDrawer.classList.add("active");
       drawerBackdrop.classList.add("active");
@@ -1978,30 +3081,31 @@
     function renderSourceFeed() {
       if (!sourceFeedList) return;
       sourceFeedList.innerHTML = sourceFeed
-        .map(item => `
-          <div class="source-feed-item">
-            <div class="source-feed-time">${item.timeAgo}</div>
-            <div class="source-feed-title">${item.title}</div>
-            <div class="source-feed-meta">
-              <span class="badge">${item.asset.symbol}</span>
-              <span>${item.asset.name}</span>
-              <span>${item.source}</span>
-              <span>${item.timestamp.split(' ')[1]}</span>
-            </div>
-            <div class="source-tooltip">
-              <strong>${item.title}</strong>
-              <p>${item.summary}</p>
-              <p>${item.detail}</p>
-              <div class="tooltip-ai">
-                <span>AI</span>
-                ${item.ai}
+        .map(item => {
+          const timeLabel = item.timestamp?.split(' ')[1] || "--";
+          return `
+            <div class="source-feed-item">
+              <div class="source-feed-time">${item.timeAgo}</div>
+              <div class="source-feed-title">${item.title}</div>
+              <div class="source-feed-meta">
+                <span class="badge">${item.asset.symbol}</span>
+                <span>${item.asset.name}</span>
+                <span>${item.source}</span>
+                <span>${timeLabel}</span>
+              </div>
+              <p class="source-feed-summary">${item.summary}</p>
+              <p class="source-feed-detail">${item.detail}</p>
+              <div class="source-feed-ai">
+                <span>AI 分析</span>
+                <div>${item.ai}</div>
               </div>
             </div>
-          </div>
-        `)
+          `;
+        })
         .join("");
     }
 
+    initOpenStockBridge();
     renderPriceTicker();
     renderSourceFeed();
   </script>
