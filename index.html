@@ -137,6 +137,48 @@
       font-weight: 600;
     }
 
+    .price-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .price-change {
+      font-weight: 600;
+    }
+
+    .price-change.positive {
+      color: var(--bull);
+    }
+
+    .price-change.negative {
+      color: var(--bear);
+    }
+
+    .info-metrics {
+      display: grid;
+      gap: 6px;
+    }
+
+    .info-metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(22, 26, 42, 0.78);
+      border: 1px solid rgba(123, 153, 255, 0.16);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .info-metric strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
     .main-grid {
       display: grid;
       grid-template-columns: 1.35fr 1fr;
@@ -219,6 +261,11 @@
       padding: 6px 12px;
       border-radius: 999px;
       border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      width: fit-content;
     }
 
     .direction-long {
@@ -534,20 +581,21 @@
     .detail-drawer {
       position: fixed;
       top: 0;
-      right: -420px;
-      width: 420px;
+      right: 0;
+      width: min(620px, 94vw);
       height: 100vh;
       background: rgba(10, 12, 22, 0.98);
       box-shadow: -24px 0 48px -28px rgba(0, 0, 0, 0.65);
       border-left: 1px solid rgba(96, 112, 192, 0.25);
       display: grid;
       grid-template-rows: auto 1fr;
-      transition: right 0.3s ease;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
       z-index: 30;
     }
 
     .detail-drawer.active {
-      right: 0;
+      transform: translateX(0);
     }
 
     .drawer-header {
@@ -583,13 +631,53 @@
     }
 
     .drawer-score {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: grid;
+      gap: 14px;
       background: rgba(18, 22, 37, 0.85);
       border-radius: 16px;
       border: 1px solid rgba(96, 110, 184, 0.24);
-      padding: 16px;
+      padding: 18px;
+    }
+
+    .score-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .score-meta {
+      display: grid;
+      gap: 10px;
+    }
+
+    .score-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .stat-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(24, 28, 46, 0.8);
+      border: 1px solid rgba(111, 133, 214, 0.2);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .stat-chip strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .score-summary {
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.6;
     }
 
     .drawer-body {
@@ -703,7 +791,7 @@
 
     .info-item {
       display: grid;
-      gap: 6px;
+      gap: 10px;
       padding: 14px;
       border-radius: 16px;
       border: 1px solid rgba(123, 153, 255, 0.18);
@@ -740,24 +828,52 @@
       line-height: 1.5;
     }
 
-    .ai-summary {
-      padding: 18px;
-      border-radius: 18px;
-      border: 1px solid rgba(170, 159, 255, 0.2);
-      background: linear-gradient(180deg, rgba(89, 74, 188, 0.25) 0%, rgba(19, 18, 31, 0.9) 100%);
-      display: grid;
-      gap: 10px;
-    }
-
-    .ai-summary h3 {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .ai-summary p {
+    .info-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
       color: var(--text-secondary);
-      font-size: 13px;
-      line-height: 1.6;
+    }
+
+    .info-link {
+      color: var(--accent);
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .info-link:hover {
+      text-decoration: underline;
+    }
+
+    .info-address {
+      font-family: "Space Grotesk", monospace;
+      font-size: 12px;
+      color: rgba(226, 230, 255, 0.8);
+      word-break: break-all;
+    }
+
+    .info-chart {
+      margin-top: 6px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(21, 24, 36, 0.88);
+      border: 1px solid rgba(111, 133, 214, 0.22);
+      display: grid;
+      gap: 8px;
+    }
+
+    .info-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .info-chart svg {
+      width: 100%;
+      height: 140px;
     }
 
     .strategy-grid {
@@ -955,6 +1071,7 @@
             <span style="color: var(--text-secondary); font-size: 12px;">跨市场价差平均 2.1%</span>
           </div>
         </div>
+        <div class="kpi-row" id="priceTicker"></div>
       </header>
 
       <main class="signal-area">
@@ -1250,18 +1367,31 @@
     </div>
     <div class="drawer-content">
       <div class="drawer-score">
-        <div>
-          <div class="direction-tag direction-long" id="drawerDirection">做多</div>
-          <div class="price-line">
-            <strong id="drawerPrice">$0.00</strong>
-            <span id="drawerChange">0%</span>
-            <span id="drawerTimestamp">更新时间 · --:--</span>
+        <div class="score-top">
+          <div class="score-meta">
+            <div class="direction-tag direction-long" id="drawerDirection">做多</div>
+            <div class="price-line">
+              <strong id="drawerPrice">$0.00</strong>
+              <span id="drawerChange">0%</span>
+              <span id="drawerTimestamp">更新时间 · --:--</span>
+            </div>
+          </div>
+          <div class="score-block">
+            <div class="score-value" id="drawerScore">0</div>
+            <div class="score-label">综合评分</div>
           </div>
         </div>
-        <div class="score-block">
-          <div class="score-value" id="drawerScore">0</div>
-          <div class="score-label">综合评分</div>
+        <div class="score-stats">
+          <div class="stat-chip">
+            <span>成交量</span>
+            <strong id="drawerStatVolume">--</strong>
+          </div>
+          <div class="stat-chip">
+            <span>信号来源</span>
+            <strong id="drawerStatSources">--</strong>
+          </div>
         </div>
+        <p class="score-summary" id="drawerSummary">AI 模型正在汇总信号...</p>
       </div>
 
       <div class="chart-shell">
@@ -1273,11 +1403,6 @@
           <polyline id="drawerLineChart" fill="none" stroke="#8d78ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points=""></polyline>
           <polyline id="drawerAreaGradient" fill="url(#areaFill)" stroke="none" points=""></polyline>
         </svg>
-      </div>
-
-      <div class="ai-summary">
-        <h3>AI 情绪摘要</h3>
-        <p id="drawerSummary">AI 模型正在汇总信号...</p>
       </div>
 
       <div class="drawer-section">
@@ -1311,25 +1436,58 @@
             type: "新闻",
             time: "10:05",
             title: "Fox Business：特朗普竞选办公室敲定 WFLI 合作",
-            desc: "官方声明确认 WFLI 将成为竞选周期内的主要链上结算伙伴。模型判断将提升代币使用率与媒体关注度。"
+            desc: "官方声明确认 WFLI 将成为竞选周期内的主要链上结算伙伴。模型判断将提升代币使用率与媒体关注度。",
+            link: "https://www.foxbusiness.com/politics/trump-campaign-world-liberty-financial",
+            linkText: "原文 · Fox Business",
+            metrics: [
+              { label: "媒体", value: "Fox Business" },
+              { label: "发布时间", value: "10:02" },
+              { label: "二次引用", value: "12 家媒体" }
+            ]
           },
           {
             type: "链上",
             time: "10:07",
             title: "鲸鱼地址 0x9F…a21 连续买入 4.6M WFLI",
-            desc: "链上监控识别该地址与特朗普家族基金会曾有交互，过去 24h 内首次出现大额净流入。"
+            desc: "链上监控识别该地址与特朗普家族基金会曾有交互，过去 24h 内首次出现大额净流入。",
+            address: "0x9F2c6a9b6E17aCb4F3e125C81b32AaE9719DaA21",
+            explorer: "https://etherscan.io/address/0x9F2c6a9b6E17aCb4F3e125C81b32AaE9719DaA21",
+            chart: {
+              label: "近 6 小时净买入（百万 WFLI）",
+              change: "+4.6M WFLI",
+              values: [0.2, 0.8, 1.9, 2.6, 3.8, 4.6]
+            },
+            metrics: [
+              { label: "资金来源", value: "Trump 相关基金" },
+              { label: "净买入", value: "4.6M WFLI" },
+              { label: "过往关联", value: "14 次交易" }
+            ]
           },
           {
             type: "社媒",
             time: "10:09",
             title: "Truth Social 热度指数 63 → 120",
-            desc: "社交监听模型捕捉到与“Liberty Payment”相关话题在 3 分钟内爆量，情绪偏正面。"
+            desc: "社交监听模型捕捉到与“Liberty Payment”相关话题在 3 分钟内爆量，情绪偏正面。",
+            link: "https://truthsocial.com/@liberty/payment-tracker",
+            linkText: "查看 Truth Social 原帖",
+            metrics: [
+              { label: "平台", value: "Truth Social" },
+              { label: "10 分钟互动量", value: "50 万" },
+              { label: "情绪分值", value: "+0.78" }
+            ]
           },
           {
             type: "衍生品",
             time: "10:11",
             title: "WFLI 永续资金费率由 -0.012% 翻为 +0.018%",
-            desc: "资金费率从负转正，空头平仓需求上升，配合 OI 增长 6.2%，模型判断多头动能延续。"
+            desc: "资金费率从负转正，空头平仓需求上升，配合 OI 增长 6.2%，模型判断多头动能延续。",
+            link: "https://www.coinglass.com/perpetual/WFLI",
+            linkText: "查看资金费率详情",
+            metrics: [
+              { label: "资金费率", value: "+0.018%" },
+              { label: "OI 变化", value: "+6.2%" },
+              { label: "主要交易所", value: "Binance Perp" }
+            ]
           }
         ],
         strategies: [
@@ -1371,19 +1529,40 @@
             type: "ETF",
             time: "09:32",
             title: "美国现货 ETF 当日净流入 -$58M",
-            desc: "较前一交易日缩量 70%，说明机构被动买盘减少，价格弹性增大。"
+            desc: "较前一交易日缩量 70%，说明机构被动买盘减少，价格弹性增大。",
+            link: "https://www.coinglass.com/etf",
+            linkText: "查看 ETF 流量明细",
+            metrics: [
+              { label: "净流入", value: "-$58M" },
+              { label: "较昨日", value: "-70%" },
+              { label: "主导 ETF", value: "IBIT · FBTC · ARKB" }
+            ]
           },
           {
             type: "衍生品",
             time: "09:40",
             title: "CME OI 自高位回落 4.1%",
-            desc: "期货持仓减少显示机构短线撤出，模型将其视为趋势反转预兆。"
+            desc: "期货持仓减少显示机构短线撤出，模型将其视为趋势反转预兆。",
+            link: "https://www.cmegroup.com/markets/cryptocurrencies/bitcoin/bitcoin.html",
+            linkText: "查看 CME 报告",
+            metrics: [
+              { label: "OI 变化", value: "-4.1%" },
+              { label: "未平仓合约", value: "$18.4B" },
+              { label: "资金费率", value: "-0.006%" }
+            ]
           },
           {
             type: "美股",
             time: "09:44",
             title: "ABTC 盘前未跟随 BTC 5% 涨幅",
-            desc: "跨市场价差 +2.2%，提示可提前布局美股开盘的对冲套利。"
+            desc: "跨市场价差 +2.2%，提示可提前布局美股开盘的对冲套利。",
+            link: "https://finance.yahoo.com/quote/ABTC",
+            linkText: "查看 ABTC 报价",
+            metrics: [
+              { label: "当前溢价", value: "+2.2%" },
+              { label: "盘前价格", value: "$52.1" },
+              { label: "对冲建议", value: "做空 ABTC / 做多 BTC" }
+            ]
           }
         ],
         strategies: [
@@ -1425,19 +1604,45 @@
             type: "社媒",
             time: "08:40",
             title: "直播公告贴文 10 分钟互动量破 50 万",
-            desc: "互动量较 7 日均值提升 4.2 倍，内容情绪偏高，配合新增关注量提升。"
+            desc: "互动量较 7 日均值提升 4.2 倍，内容情绪偏高，配合新增关注量提升。",
+            link: "https://truthsocial.com/@trumpto/live-announcement",
+            linkText: "查看公告原帖",
+            metrics: [
+              { label: "平台", value: "Truth Social" },
+              { label: "互动增幅", value: "×4.2" },
+              { label: "新增关注", value: "+8.6k" }
+            ]
           },
           {
             type: "盘前数据",
             time: "08:52",
             title: "盘前成交额 $158M · +220%",
-            desc: "成交主要集中在机构账户，暗示预期直播将带来广告与订阅需求。"
+            desc: "成交主要集中在机构账户，暗示预期直播将带来广告与订阅需求。",
+            link: "https://www.nasdaq.com/market-activity/stocks/djt",
+            linkText: "查看盘前行情",
+            metrics: [
+              { label: "成交额", value: "$158M" },
+              { label: "同比", value: "+220%" },
+              { label: "机构占比", value: "68%" }
+            ]
           },
           {
             type: "链上",
             time: "09:04",
             title: "Trump 关联基金地址向 DJT 生态转入 $3.1M",
-            desc: "链上转移发生在直播公告之后 5 分钟，可能用于营销或市值管理。"
+            desc: "链上转移发生在直播公告之后 5 分钟，可能用于营销或市值管理。",
+            address: "0x4CeC91cB63f4906A7C66b02A88d3C4290F3A45d3",
+            explorer: "https://etherscan.io/address/0x4CeC91cB63f4906A7C66b02A88d3C4290F3A45d3",
+            chart: {
+              label: "近 12 小时资金流向（万美元）",
+              change: "+310 万美元",
+              values: [0.0, 4.8, 6.5, 12.4, 18.9, 26.0, 31.0]
+            },
+            metrics: [
+              { label: "来源地址", value: "基金多签" },
+              { label: "过去 30 天交互", value: "14 次" },
+              { label: "主要用途", value: "营销活动资金" }
+            ]
           }
         ],
         strategies: [
@@ -1465,6 +1670,34 @@
         ]
       }
     };
+
+    const priceTickerData = [
+      {
+        symbol: "BTC",
+        name: "Bitcoin",
+        price: "$66,120",
+        change: "+1.8%",
+        direction: "positive",
+        meta: "24h · ETF 净流入 $58M"
+      },
+      {
+        symbol: "ETH",
+        name: "Ethereum",
+        price: "$3,120",
+        change: "+0.9%",
+        direction: "positive",
+        meta: "24h · 链上活跃地址 +6%"
+      },
+      {
+        symbol: "SOL",
+        name: "Solana",
+        price: "$168.40",
+        change: "-1.5%",
+        direction: "negative",
+        meta: "24h · TVL 微降 0.8%"
+      }
+    ];
+
 
     const sourceFeed = [
       {
@@ -1550,6 +1783,8 @@
       score: document.getElementById("drawerScore"),
       volume: document.getElementById("drawerVolume"),
       summary: document.getElementById("drawerSummary"),
+      statsVolume: document.getElementById("drawerStatVolume"),
+      statsSources: document.getElementById("drawerStatSources"),
       sources: document.getElementById("drawerSources"),
       sourcesCount: document.getElementById("drawerSourcesCount"),
       strategies: document.getElementById("drawerStrategies")
@@ -1557,21 +1792,113 @@
 
     const sourceFeedList = document.getElementById("sourceFeedList");
 
-    function formatChartPoints(values) {
-      if (!values.length) return "";
+    function formatChartPoints(values, width = 320, height = 180) {
+      if (!Array.isArray(values) || !values.length) return "";
       const max = Math.max(...values);
       const min = Math.min(...values);
       const range = max - min || 1;
-      const width = 320;
-      const height = 180;
-      const step = width / (values.length - 1);
+      const segments = Math.max(values.length - 1, 1);
+      const step = width / segments;
       return values
         .map((v, idx) => {
           const x = idx * step;
-          const y = height - ((v - min) / range) * (height - 16) - 8;
+          const normalized = (v - min) / range;
+          const y = height - normalized * (height - 16) - 8;
           return `${x.toFixed(2)},${y.toFixed(2)}`;
         })
         .join(" ");
+    }
+
+    function formatAreaPoints(values, width = 320, height = 180) {
+      const linePoints = formatChartPoints(values, width, height);
+      if (!linePoints) return "";
+      return `${linePoints} ${width.toFixed(2)},${height.toFixed(2)} 0,${height.toFixed(2)}`;
+    }
+
+    function renderSourceChart(chart) {
+      if (!chart || !Array.isArray(chart.values) || chart.values.length < 2) return "";
+      const width = 360;
+      const height = 140;
+      const linePoints = formatChartPoints(chart.values, width, height);
+      if (!linePoints) return "";
+      const areaPoints = formatAreaPoints(chart.values, width, height);
+      const changeFragment = chart.change ? `<span>${chart.change}</span>` : "";
+      return `
+        <div class="info-chart">
+          <div class="info-chart-header">
+            <span>${chart.label || "资金流向曲线"}</span>
+            ${changeFragment}
+          </div>
+          <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none">
+            ${areaPoints ? `<polygon points="${areaPoints}" fill="rgba(163, 134, 255, 0.14)"></polygon>` : ""}
+            <polyline points="${linePoints}" fill="none" stroke="rgba(163, 134, 255, 0.9)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          </svg>
+        </div>
+      `;
+    }
+
+    function renderSourceItem(source) {
+      const linkSection = source.link
+        ? `
+          <div class="info-meta">
+            <a class="info-link" href="${source.link}" target="_blank" rel="noopener noreferrer">${source.linkText || "原文链接"}</a>
+          </div>
+        `
+        : "";
+      const addressSection = source.address
+        ? `
+          <div class="info-meta">
+            <span class="info-address">${source.address}</span>
+            ${source.explorer ? `<a class="info-link" href="${source.explorer}" target="_blank" rel="noopener noreferrer">查看区块浏览器</a>` : ""}
+          </div>
+        `
+        : "";
+      const metricsSection = Array.isArray(source.metrics) && source.metrics.length
+        ? `
+          <div class="info-metrics">
+            ${source.metrics
+              .map(metric => `
+                <div class="info-metric">
+                  <span>${metric.label}</span>
+                  <strong>${metric.value}</strong>
+                </div>
+              `)
+              .join("")}
+          </div>
+        `
+        : "";
+      const chartSection = renderSourceChart(source.chart);
+      return `
+        <div class="info-item">
+          <div class="info-head">
+            <span>${source.time}</span>
+            <span class="info-type">${source.type}</span>
+          </div>
+          <div class="info-title">${source.title}</div>
+          <div class="info-desc">${source.desc}</div>
+          ${linkSection}
+          ${addressSection}
+          ${metricsSection}
+          ${chartSection}
+        </div>
+      `;
+    }
+
+    function renderPriceTicker() {
+      const container = document.getElementById("priceTicker");
+      if (!container) return;
+      container.innerHTML = priceTickerData
+        .map(item => `
+          <div class="kpi-card">
+            <span class="kpi-label">${item.symbol} · ${item.name}</span>
+            <span class="kpi-value">${item.price}</span>
+            <div class="price-meta">
+              <span class="price-change ${item.direction}">${item.change}</span>
+              <span>${item.meta}</span>
+            </div>
+          </div>
+        `)
+        .join("");
     }
 
     function renderDetail(symbol) {
@@ -1587,19 +1914,20 @@
       drawerRefs.score.textContent = data.score;
       drawerRefs.volume.textContent = data.volume;
       drawerRefs.summary.textContent = data.summary;
+
+      const volumeValue = typeof data.volume === "string" && data.volume.includes("·")
+        ? data.volume.split("·").pop().trim()
+        : data.volume;
+      if (drawerRefs.statsVolume) {
+        drawerRefs.statsVolume.textContent = volumeValue || "--";
+      }
+      if (drawerRefs.statsSources) {
+        drawerRefs.statsSources.textContent = `${data.sources.length} 条`;
+      }
+
       drawerRefs.sourcesCount.textContent = `当前加载 ${data.sources.length} 条`;
 
-      drawerRefs.sources.innerHTML = data.sources
-        .map(source => `
-          <div class="info-item">
-            <div class="info-head">
-              <span>${source.time}</span>
-              <span class="info-type">${source.type}</span>
-            </div>
-            <div class="info-title">${source.title}</div>
-            <div class="info-desc">${source.desc}</div>
-          </div>
-        `).join("");
+      drawerRefs.sources.innerHTML = data.sources.map(renderSourceItem).join("");
 
       drawerRefs.strategies.innerHTML = data.strategies
         .map(strategy => `
@@ -1616,7 +1944,7 @@
 
       const points = formatChartPoints(data.chart);
       lineChart.setAttribute("points", points);
-      areaGradient.setAttribute("points", `${points} 320,180 0,180`);
+      areaGradient.setAttribute("points", formatAreaPoints(data.chart) || "");
 
       detailDrawer.classList.add("active");
       drawerBackdrop.classList.add("active");
@@ -1674,6 +2002,7 @@
         .join("");
     }
 
+    renderPriceTicker();
     renderSourceFeed();
   </script>
 </body>
